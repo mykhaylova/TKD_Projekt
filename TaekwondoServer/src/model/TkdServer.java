@@ -1,10 +1,5 @@
 package model;
 
-import com.sun.net.httpserver.Headers;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -16,18 +11,19 @@ import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Vector;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicInteger;
-
-
-
+import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
+import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpServer;
 
 public class TkdServer
 {
     static String mFighter1ID = "fighter1";
     static String mFighter2ID = "fighter2";
+    static String mRefereeID = null;
     static AtomicInteger mFighter1Points = new AtomicInteger(Float.floatToIntBits(0.0f));
     static AtomicInteger mFighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
     static ExecutorService threadPool = Executors.newCachedThreadPool();
@@ -71,25 +67,29 @@ public class TkdServer
                     br.close();
                     String requestBody = sb.toString();
                     String[] requestBodyParts = requestBody.split(":");
-                    String figherID = requestBodyParts[0];
-                    float points = Float.valueOf(requestBodyParts[1]);
+                    String refereeID = requestBodyParts[0];
+                    String fighterID = requestBodyParts[1];
+                    float points = Float.valueOf(requestBodyParts[2]);
                     System.out.println("REQ:"+requestBody);
-
-                    if(mFighter1ID.equals(figherID))
-                    {
-                        float fighterPoints = Float.intBitsToFloat(mFighter1Points.get());
-                        fighterPoints += points;
-                        mFighter1Points.set(Float.floatToIntBits(fighterPoints));
-                    }
-                    else if(mFighter2ID.equals(figherID))
-                    {
-                        float fighterPoints = Float.intBitsToFloat(mFighter2Points.get());
-                        fighterPoints += points;
-                        mFighter2Points.set(Float.floatToIntBits(fighterPoints));
-                    }
-                    else {
-                        System.err.println("Point update for unknown FighterID received.");
-                    }
+                    
+                	   mRefereeID = refereeID;
+                	   
+	                    if(mFighter1ID.equals(fighterID))
+	                    {
+	                        float fighterPoints = Float.intBitsToFloat(mFighter1Points.get());
+	                        fighterPoints += points;
+	                        mFighter1Points.set(Float.floatToIntBits(fighterPoints));
+	                    }
+	                    else if(mFighter2ID.equals(fighterID))
+	                    {
+	                        float fighterPoints = Float.intBitsToFloat(mFighter2Points.get());
+	                        fighterPoints += points;
+	                        mFighter2Points.set(Float.floatToIntBits(fighterPoints));
+	                    }
+	                    else {
+	                        System.err.println("Point update for unknown FighterID received.");
+	                    }
+                		   
 
                     //answer
                     httpExchange.sendResponseHeaders(200, -1); //we dont send a response body, so -1;
@@ -101,7 +101,7 @@ public class TkdServer
             } finally {
                 httpExchange.close();
                 for(PointListener pl : mListeners)
-                	pl.updatePoints(mFighter1Points, mFighter2Points);
+                	pl.updatePoints(mFighter1Points, mFighter2Points, mRefereeID);
             }
         }
     };
@@ -129,12 +129,7 @@ public class TkdServer
 			e.printStackTrace();
 			return ips;
 		}
-    	
-    	
-    }
-
-
-
+	}
 
     public static void StartServer()
     {
@@ -152,7 +147,6 @@ public class TkdServer
             e.printStackTrace();
         }
 
-
         //to make the httpServer handle the request multithreaded (1 thread by request) we use a thread pool.
         // This avoids creating new threads on the fly, but uses a pool of a fixed number of threads to process the requests.
         ExecutorService threadPool = Executors.newFixedThreadPool(24);
@@ -161,7 +155,7 @@ public class TkdServer
             mServer.setExecutor(threadPool);
             mServer.createContext("/count", mCountHandler);
             System.out.println("starting http server");
-            mServer.start();
+            mServer.start();           
             
         } catch (IOException e) {
             e.printStackTrace();
@@ -172,7 +166,7 @@ public class TkdServer
     {
     	try 
     	{
-    		mServer.stop(3);
+    		mServer.stop(2);
     		System.out.println("stopped http server");
     	}
     	catch (NullPointerException e)
@@ -181,23 +175,23 @@ public class TkdServer
     	}
     }
     
-   
+   public static void resetPoints()
+   {
+	   mFighter1Points.set(0);
+	   mFighter2Points.set(0);	 
+	  // for(PointListener pl : mListeners)
+      // pl.updatePoints(mFighter1Points, mFighter2Points, mRefereeID);	  
+   }
     
     public static void subscribe(PointListener pl)
     {
-    	mListeners.add(pl);    	
+    	mListeners.add(pl);  
 		
 	}
     
     public interface PointListener
     {
-    	void updatePoints(AtomicInteger fighter1, AtomicInteger fighter2);       	
-    	
-    
-	};
-
+    	void updatePoints(AtomicInteger fighter1, AtomicInteger fighter2, String refereeID);
+    };
 	
-}
-
-
-
+} 

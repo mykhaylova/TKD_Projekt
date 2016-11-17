@@ -22,22 +22,21 @@ import model.TkdServer;
 import model.TkdServer.PointListener;
 
 @SuppressWarnings("serial")
-public class MainWindow extends JFrame implements PointListener{
+public class TulWindow extends JFrame implements PointListener{
 
-	private JButton buttonStart, buttonStop, buttonReset, buttonExit, buttonTotal; 
+	private JButton buttonStart, buttonStop, buttonReset, buttonExit; 
 	private JLabel points, connection;
 	private LineBorder border;
 	private JList<String> ips;
-	static String mReferee1ID = "referee1";
-    static String mReferee2ID = "referee2"; 
-    static String mReferee3ID = "referee3";
-    static String mReferee4ID = "referee4";
 	private JLabel fighter1, f1points, r1Label, r2Label, r3Label, r4Label;
 	private JLabel fighter2, f2points, r1ResultRed, r1ResultBlue, r2ResultRed,r2ResultBlue, r3ResultRed, r3ResultBlue, r4ResultRed, r4ResultBlue;
 	
-		
+	//private JMenuBar  menuBar;
+
+	
+	
 	//////// CONSTRUCTOR ///////////////////
-	public MainWindow()
+	public TulWindow()
 	{
 		initBasics();
 		initComponents();
@@ -67,7 +66,6 @@ public class MainWindow extends JFrame implements PointListener{
 		buttonStop.setBackground(Color.red);
 		buttonReset = new JButton("RESET");
 		buttonExit = new JButton("EXIT");
-		buttonTotal = new JButton("GET TOTAL");
 		ArrayList<String> ipsal = TkdServer.getAllIPs();
 		String[] entries = ipsal.toArray(new String[ipsal.size()]);
 		///String[] entries = {"Test1", "Test2", "Test3", "Test4"};
@@ -104,12 +102,12 @@ public class MainWindow extends JFrame implements PointListener{
 		r1Label.setBackground(Color.WHITE);
 		r1Label.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-		r1ResultRed = new JLabel("0", JLabel.CENTER);
+		r1ResultRed = new JLabel("10", JLabel.CENTER);
 		r1ResultRed.setOpaque(true);
 		r1ResultRed.setBackground(Color.RED);
 		r1ResultRed.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-		r1ResultBlue = new JLabel("0", JLabel.CENTER);
+		r1ResultBlue = new JLabel("10", JLabel.CENTER);
 		r1ResultBlue.setOpaque(true);
 		r1ResultBlue.setBackground(Color.BLUE);
 		r1ResultBlue.setFont(new Font("Tahoma", Font.PLAIN, 36));
@@ -120,12 +118,12 @@ public class MainWindow extends JFrame implements PointListener{
 		r2Label.setBackground(Color.WHITE);
 		r2Label.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-		r2ResultRed = new JLabel("0", JLabel.CENTER);
+		r2ResultRed = new JLabel("10", JLabel.CENTER);
 		r2ResultRed.setOpaque(true);
 		r2ResultRed.setBackground(Color.RED);
 		r2ResultRed.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-		r2ResultBlue = new JLabel("0", JLabel.CENTER);
+		r2ResultBlue = new JLabel("10", JLabel.CENTER);
 		r2ResultBlue.setOpaque(true);
 		r2ResultBlue.setBackground(Color.BLUE);
 		r2ResultBlue.setFont(new Font("Tahoma", Font.PLAIN, 36));
@@ -137,12 +135,12 @@ public class MainWindow extends JFrame implements PointListener{
 		r3Label.setBackground(Color.WHITE);
 		r3Label.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-		r3ResultRed = new JLabel("0", JLabel.CENTER);
+		r3ResultRed = new JLabel("10", JLabel.CENTER);
 		r3ResultRed.setOpaque(true);
 		r3ResultRed.setBackground(Color.RED);
 		r3ResultRed.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-		r3ResultBlue = new JLabel("0", JLabel.CENTER);
+		r3ResultBlue = new JLabel("10", JLabel.CENTER);
 		r3ResultBlue.setOpaque(true);
 		r3ResultBlue.setBackground(Color.BLUE);
 		r3ResultBlue.setFont(new Font("Tahoma", Font.PLAIN, 36));
@@ -154,12 +152,12 @@ public class MainWindow extends JFrame implements PointListener{
 		r4Label.setBackground(Color.WHITE);
 		r4Label.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-		r4ResultRed = new JLabel("0", JLabel.CENTER);
+		r4ResultRed = new JLabel("10", JLabel.CENTER);
 		r4ResultRed.setOpaque(true);
 		r4ResultRed.setBackground(Color.RED);
 		r4ResultRed.setFont(new Font("Tahoma", Font.PLAIN, 36));
 		
-		r4ResultBlue = new JLabel("0", JLabel.CENTER);
+		r4ResultBlue = new JLabel("10", JLabel.CENTER);
 		r4ResultBlue.setOpaque(true);
 		r4ResultBlue.setBackground(Color.BLUE);
 		r4ResultBlue.setFont(new Font("Tahoma", Font.PLAIN, 36));
@@ -172,6 +170,8 @@ public class MainWindow extends JFrame implements PointListener{
 		add(getTop(),BorderLayout.NORTH);
 		add(getMiddle(),BorderLayout.CENTER);
 		add(getBottom(), BorderLayout.SOUTH);
+///		add(buttonStart);
+///		add(buttonStop);	
 ///		add(points, BorderLayout.SOUTH);
 ///		add(ips);
 		
@@ -250,7 +250,6 @@ public class MainWindow extends JFrame implements PointListener{
 	private JPanel getBottom () {
 		JPanel bottom = new JPanel ();
 		bottom.setBorder(BorderFactory.createEtchedBorder());
-		bottom.add(buttonTotal);
 		bottom.add(buttonReset);
 		bottom.add(buttonExit);
 		return bottom;	
@@ -262,7 +261,6 @@ public class MainWindow extends JFrame implements PointListener{
 		TkdServer.getAllIPs();
 		TkdServer.subscribe(this);
 		buttonStart.addActionListener( new ActionListener(){public void actionPerformed(ActionEvent ae){start();}	} );
-		buttonTotal.addActionListener( new ActionListener(){public void actionPerformed(ActionEvent ae){showTotal();}	} );
 		buttonStop.addActionListener( new ActionListener(){public void actionPerformed(ActionEvent ae){stop(); }	} );
 		buttonReset.addActionListener(new ActionListener (){public void actionPerformed(ActionEvent ae){resetPoints(); }	} );
 		buttonExit.addActionListener(new ActionListener() {public void actionPerformed(ActionEvent ae){exit(); }});
@@ -284,7 +282,7 @@ public class MainWindow extends JFrame implements PointListener{
 	//////// START /////////////////////////////////
 	public void start()
 	{		
-		//resetPoints();
+		resetPoints();
 		buttonStart.setBackground(Color.green);
 		buttonStop.setBackground(null);
 		TkdServer.StartServer();		
@@ -307,114 +305,16 @@ public class MainWindow extends JFrame implements PointListener{
 
 	////////// UPDATE POINTS //////////////////////
 	public void updatePoints(AtomicInteger points1, AtomicInteger points2, String refereeId) {
-		if(refereeId.equals(mReferee1ID))
-		{
-			float nPoints1 = Float.intBitsToFloat(points1.get());
-	        float nPoints2 = Float.intBitsToFloat(points2.get());
-	 ///    String newData = "Fighter1" + " :" +Float.toString(nPoints1)+"\n" + "Fighter2" + " :" + Float.toString(nPoints2);
-	        String f1update = Float.toString(nPoints1);
-	        r1ResultRed.setText(f1update);
-	        String f2update = Float.toString(nPoints2);
-	        r1ResultBlue.setText(f2update);
-	        r1Label.setText(refereeId);	        
-	///		points.setText(newData);
-		}
-		if(refereeId.equals(mReferee2ID))
-		{
-			float nPoints1 = Float.intBitsToFloat(points1.get());
-	        float nPoints2 = Float.intBitsToFloat(points2.get());
-	        String f1update = Float.toString(nPoints1);
-	        r2ResultRed.setText(f1update);
-	        String f2update = Float.toString(nPoints2);
-	        r2ResultBlue.setText(f2update);
-	        r2Label.setText(refereeId);	        
-		}
-		if(refereeId.equals(mReferee3ID))
-		{
-			float nPoints1 = Float.intBitsToFloat(points1.get());
-	        float nPoints2 = Float.intBitsToFloat(points2.get());
-	        String f1update = Float.toString(nPoints1);
-	        r3ResultRed.setText(f1update);
-	        String f2update = Float.toString(nPoints2);
-	        r3ResultBlue.setText(f2update);
-	        r3Label.setText(refereeId);	        
-		}
-		if(refereeId.equals(mReferee4ID))
-		{
-			float nPoints1 = Float.intBitsToFloat(points1.get());
-	        float nPoints2 = Float.intBitsToFloat(points2.get());
-	        String f1update = Float.toString(nPoints1);
-	        r4ResultRed.setText(f1update);
-	        String f2update = Float.toString(nPoints2);
-	        r4ResultBlue.setText(f2update);
-	        r4Label.setText(refereeId);	        
-		}
+		float nPoints1 = Float.intBitsToFloat(points1.get());
+        float nPoints2 = Float.intBitsToFloat(points2.get());
+ ///    String newData = "Fighter1" + " :" +Float.toString(nPoints1)+"\n" + "Fighter2" + " :" + Float.toString(nPoints2);
+        String f1update = Float.toString(nPoints1);
+        f1points.setText(f1update);
+        String f2update = Float.toString(nPoints2);
+        f2points.setText(f2update);
+        
+///		points.setText(newData);
 		
-	}
-	
-	public void showTotal()
-	{		
-		float totalRed = 0.0f;
-		float totalBlue = 0.0f;
-		
-		if(Float.parseFloat(r1ResultRed.getText()) > Float.parseFloat(r1ResultBlue.getText()))
-		{
-			totalRed = totalRed + 1.0f;		
-		}
-		else //(Float.parseFloat(r1ResultRed.getText()) < Float.parseFloat(r1ResultBlue.getText()))
-		{
-			totalBlue = totalBlue + 1.0f;		
-		}
-		/*else
-		{
-			totalBlue = totalBlue + 1.0f;	
-			totalRed = totalRed + 1.0f;
-		}*/
-		
-		if(Float.parseFloat(r2ResultRed.getText()) > Float.parseFloat(r2ResultBlue.getText()))
-		{
-			totalRed = totalRed + 1.0f;		
-		}
-		else //if(Float.parseFloat(r2ResultRed.getText()) < Float.parseFloat(r2ResultBlue.getText()))
-		{
-			totalBlue = totalBlue + 1.0f;		
-		}
-//		else
-//		{
-//			totalBlue = totalBlue + 1.0f;	
-//			totalRed = totalRed + 1.0f;
-//		}
-		
-		if(Float.parseFloat(r3ResultRed.getText()) > Float.parseFloat(r3ResultBlue.getText()))
-		{
-			totalRed = totalRed + 1.0f;		
-		}
-		else //if(Float.parseFloat(r3ResultRed.getText()) < Float.parseFloat(r3ResultBlue.getText()))
-		{
-			totalBlue = totalBlue + 1.0f;		
-		}
-//		else
-//		{
-//			totalBlue = totalBlue + 1.0f;	
-//			totalRed = totalRed + 1.0f;
-//		}
-		
-		if(Float.parseFloat(r4ResultRed.getText()) > Float.parseFloat(r4ResultBlue.getText()))
-		{
-			totalRed = totalRed + 1.0f;		
-		}
-		else // if(Float.parseFloat(r4ResultRed.getText()) < Float.parseFloat(r4ResultBlue.getText()))
-		{
-			totalBlue = totalBlue + 1.0f;		
-		}
-//		else
-//		{
-//			totalBlue = totalBlue + 1.0f;	
-//			totalRed = totalRed + 1.0f;
-//		}
-		
-		f1points.setText(Float.toString(totalRed));
-		f2points.setText(Float.toString(totalBlue));
 	}
 
 	public Class<? extends Annotation> annotationType() {
@@ -423,3 +323,6 @@ public class MainWindow extends JFrame implements PointListener{
 	}
 	
 }
+
+
+
