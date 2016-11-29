@@ -28,8 +28,7 @@ public class TkdServer
     static AtomicInteger mFighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
     static ExecutorService threadPool = Executors.newCachedThreadPool();
     static HttpServer mServer = null;
-    static ArrayList<PointListener> mListeners = new ArrayList<>();
-    
+    static ArrayList<PointListener> mListeners = new ArrayList<>();    
 
     static final HttpHandler mCountHandler = new HttpHandler() {
         @Override
@@ -166,7 +165,7 @@ public class TkdServer
     {
     	try 
     	{
-    		mServer.stop(2);
+    		mServer.stop(1);
     		System.out.println("stopped http server");
     	}
     	catch (NullPointerException e)
@@ -177,16 +176,21 @@ public class TkdServer
     
    public static void resetPoints()
    {
-	   mFighter1Points.set(0);
-	   mFighter2Points.set(0);	 
-	  // for(PointListener pl : mListeners)
-      // pl.updatePoints(mFighter1Points, mFighter2Points, mRefereeID);	  
+	   mFighter1Points.set(Float.floatToIntBits(0.0f));
+	   mFighter2Points.set(Float.floatToIntBits(0.0f));
+	   for(PointListener pl : mListeners)
+	   {
+	       pl.updatePoints(mFighter1Points, mFighter2Points, "referee1");
+		   pl.updatePoints(mFighter1Points, mFighter2Points, "referee2");
+		   pl.updatePoints(mFighter1Points, mFighter2Points, "referee3");
+		   pl.updatePoints(mFighter1Points, mFighter2Points, "referee4");
+	   }
+	  	 	  
    }
     
     public static void subscribe(PointListener pl)
     {
-    	mListeners.add(pl);  
-		
+    	mListeners.add(pl);  		
 	}
     
     public interface PointListener
