@@ -23,9 +23,19 @@ public class TkdServer
 {
     static String mFighter1ID = "fighter1";
     static String mFighter2ID = "fighter2";
-    static String mRefereeID = null;
-    static AtomicInteger mFighter1Points = new AtomicInteger(Float.floatToIntBits(0.0f));
-    static AtomicInteger mFighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
+    static String m1RefereeID = "referee1";
+    static String m2RefereeID = "referee2";
+    static String m3RefereeID = "referee3";
+    static String m4RefereeID = "referee4";
+    static AtomicInteger m1Fighter1Points = new AtomicInteger(Float.floatToIntBits(0.0f));
+    static AtomicInteger m1Fighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
+    static AtomicInteger m2Fighter1Points = new AtomicInteger(Float.floatToIntBits(0.0f));
+    static AtomicInteger m2Fighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
+    static AtomicInteger m3Fighter1Points = new AtomicInteger(Float.floatToIntBits(0.0f));
+    static AtomicInteger m3Fighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
+    static AtomicInteger m4Fighter1Points = new AtomicInteger(Float.floatToIntBits(0.0f));
+    static AtomicInteger m4Fighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
+
     static ExecutorService threadPool = Executors.newCachedThreadPool();
     static HttpServer mServer = null;
     static ArrayList<PointListener> mListeners = new ArrayList<>();    
@@ -38,8 +48,8 @@ public class TkdServer
                 //GET:
                 if(requestMethod.equals("GET"))
                 {
-                    float points1 = Float.intBitsToFloat(mFighter1Points.get());
-                    float points2 = Float.intBitsToFloat(mFighter2Points.get());
+                    float points1 = Float.intBitsToFloat(m1Fighter1Points.get());
+                    float points2 = Float.intBitsToFloat(m1Fighter2Points.get());
                     final String answerContent = mFighter1ID + ":" +Float.toString(points1)+"\n" + mFighter2ID + ":" + Float.toString(points2);
 
                     Headers responseHeaders = httpExchange.getResponseHeaders();
@@ -71,24 +81,79 @@ public class TkdServer
                     float points = Float.valueOf(requestBodyParts[2]);
                     System.out.println("REQ:"+requestBody);
                     
-                	   mRefereeID = refereeID;
                 	   
+                    if(m1RefereeID.equals(refereeID))
+                    {                	   
 	                    if(mFighter1ID.equals(fighterID))
 	                    {
-	                        float fighterPoints = Float.intBitsToFloat(mFighter1Points.get());
+	                        float fighterPoints = Float.intBitsToFloat(m1Fighter1Points.get());
 	                        fighterPoints += points;
-	                        mFighter1Points.set(Float.floatToIntBits(fighterPoints));
+	                        m1Fighter1Points.set(Float.floatToIntBits(fighterPoints));
 	                    }
 	                    else if(mFighter2ID.equals(fighterID))
 	                    {
-	                        float fighterPoints = Float.intBitsToFloat(mFighter2Points.get());
+	                        float fighterPoints = Float.intBitsToFloat(m1Fighter2Points.get());
 	                        fighterPoints += points;
-	                        mFighter2Points.set(Float.floatToIntBits(fighterPoints));
+	                        m1Fighter2Points.set(Float.floatToIntBits(fighterPoints));
 	                    }
 	                    else {
 	                        System.err.println("Point update for unknown FighterID received.");
 	                    }
-                		   
+                    }
+                    if(m2RefereeID.equals(refereeID))
+                    {                	   
+	                    if(mFighter1ID.equals(fighterID))
+	                    {
+	                        float fighterPoints = Float.intBitsToFloat(m2Fighter1Points.get());
+	                        fighterPoints += points;
+	                        m2Fighter1Points.set(Float.floatToIntBits(fighterPoints));
+	                    }
+	                    else if(mFighter2ID.equals(fighterID))
+	                    {
+	                        float fighterPoints = Float.intBitsToFloat(m2Fighter2Points.get());
+	                        fighterPoints += points;
+	                        m2Fighter2Points.set(Float.floatToIntBits(fighterPoints));
+	                    }
+	                    else {
+	                        System.err.println("Point update for unknown FighterID received.");
+	                    }
+                    }
+                    if(m3RefereeID.equals(refereeID))
+                    {                	   
+	                    if(mFighter1ID.equals(fighterID))
+	                    {
+	                        float fighterPoints = Float.intBitsToFloat(m3Fighter1Points.get());
+	                        fighterPoints += points;
+	                        m3Fighter1Points.set(Float.floatToIntBits(fighterPoints));
+	                    }
+	                    else if(mFighter2ID.equals(fighterID))
+	                    {
+	                        float fighterPoints = Float.intBitsToFloat(m3Fighter2Points.get());
+	                        fighterPoints += points;
+	                        m3Fighter2Points.set(Float.floatToIntBits(fighterPoints));
+	                    }
+	                    else {
+	                        System.err.println("Point update for unknown FighterID received.");
+	                    }
+                    }
+                    if(m4RefereeID.equals(refereeID))
+                    {                	   
+	                    if(mFighter1ID.equals(fighterID))
+	                    {
+	                        float fighterPoints = Float.intBitsToFloat(m4Fighter1Points.get());
+	                        fighterPoints += points;
+	                        m4Fighter1Points.set(Float.floatToIntBits(fighterPoints));
+	                    }
+	                    else if(mFighter2ID.equals(fighterID))
+	                    {
+	                        float fighterPoints = Float.intBitsToFloat(m4Fighter2Points.get());
+	                        fighterPoints += points;
+	                        m4Fighter2Points.set(Float.floatToIntBits(fighterPoints));
+	                    }
+	                    else {
+	                        System.err.println("Point update for unknown FighterID received.");
+	                    }
+                    }
 
                     //answer
                     httpExchange.sendResponseHeaders(200, -1); //we dont send a response body, so -1;
@@ -100,7 +165,12 @@ public class TkdServer
             } finally {
                 httpExchange.close();
                 for(PointListener pl : mListeners)
-                	pl.updatePoints(mFighter1Points, mFighter2Points, mRefereeID);
+                {
+                	pl.updatePoints(m1Fighter1Points, m1Fighter2Points, "referee1");
+                	pl.updatePoints(m2Fighter1Points, m2Fighter2Points, "referee2");
+                	pl.updatePoints(m3Fighter1Points, m3Fighter2Points, "referee3");
+                	pl.updatePoints(m4Fighter1Points, m4Fighter2Points, "referee4");
+                }
             }
         }
     };
@@ -176,14 +246,21 @@ public class TkdServer
     
    public static void resetPoints()
    {
-	   mFighter1Points.set(Float.floatToIntBits(0.0f));
-	   mFighter2Points.set(Float.floatToIntBits(0.0f));
+	   m1Fighter1Points.set(Float.floatToIntBits(0.0f));
+	   m1Fighter2Points.set(Float.floatToIntBits(0.0f));
+	   m2Fighter1Points.set(Float.floatToIntBits(0.0f));
+	   m2Fighter2Points.set(Float.floatToIntBits(0.0f));
+	   m3Fighter1Points.set(Float.floatToIntBits(0.0f));
+	   m3Fighter2Points.set(Float.floatToIntBits(0.0f));
+	   m4Fighter1Points.set(Float.floatToIntBits(0.0f));
+	   m4Fighter2Points.set(Float.floatToIntBits(0.0f));
+	   
 	   for(PointListener pl : mListeners)
 	   {
-	       pl.updatePoints(mFighter1Points, mFighter2Points, "referee1");
-		   pl.updatePoints(mFighter1Points, mFighter2Points, "referee2");
-		   pl.updatePoints(mFighter1Points, mFighter2Points, "referee3");
-		   pl.updatePoints(mFighter1Points, mFighter2Points, "referee4");
+	       pl.updatePoints(m1Fighter1Points, m1Fighter2Points, "referee1");
+		   pl.updatePoints(m2Fighter1Points, m2Fighter2Points, "referee2");
+		   pl.updatePoints(m3Fighter1Points, m3Fighter2Points, "referee3");
+		   pl.updatePoints(m4Fighter1Points, m4Fighter2Points, "referee4");
 	   }
 	  	 	  
    }

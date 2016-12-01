@@ -28,7 +28,6 @@ import javax.swing.border.LineBorder;
 
 import model.TkdServer;
 import model.TkdServer.PointListener;
-import view.MainWindow.TimeClass;
 
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame implements PointListener {
@@ -664,7 +663,7 @@ public class MainWindow extends JFrame implements PointListener {
 		sb.append(System.getProperty("line.separator"));
 		sb.append("Marlon Gallardo");
 		sb.append(System.getProperty("line.separator"));
-		sb.append("Youriy Kryvonos");
+		sb.append("Yuriy Kryvonos");
 		
 		
 		JOptionPane.showMessageDialog(this, sb, "Taekwondo Development Team", JOptionPane.INFORMATION_MESSAGE);
@@ -702,7 +701,6 @@ public class MainWindow extends JFrame implements PointListener {
 	}
 
 	/////// COUNTDOWN ///////////////////
-	@SuppressWarnings("deprecation")
 	private void countDown(int roundLength) {
 		int rl = roundLength;
 		timeLeft.setEnabled(false);
