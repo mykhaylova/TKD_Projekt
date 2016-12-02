@@ -32,7 +32,7 @@ import model.TkdServer.PointListener;
 @SuppressWarnings("serial")
 public class MainWindow extends JFrame implements PointListener {
 	private JButton buttonStart, buttonStop, buttonReset, buttonExit, buttonTotal, f1ButtonWarning, f2ButtonWarning,
-			f1ButtonPenalty, f2ButtonPenalty;
+			f1ButtonPenalty, f2ButtonPenalty, buttonStartTimer, buttonStopTimer, buttonResetTimer;
 	private JLabel points, connection, f1Warning, f2Warning, f1Penalty, f2Penalty;
 	private JLabel f1Warn, f2Warn, f1Pen, f2Pen, f1WarningScore, f2WarningScore, f1PenaltyScore, f2PenaltyScore;
 	private LineBorder border;
@@ -73,7 +73,7 @@ public class MainWindow extends JFrame implements PointListener {
 
 	/////// INIT BASICS /////////////////////
 	private void initBasics() {
-		setSize(1000, 550);
+		setSize(1200, 650);
 		setLocationRelativeTo(null);
 		setTitle("Taekwondo Server");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -151,12 +151,21 @@ public class MainWindow extends JFrame implements PointListener {
 		
 		points = new JLabel("Points");
 		points.setBorder(border);
+		
 		buttonStart = new JButton("START");
 		buttonStop = new JButton("STOP");
 		buttonStop.setBackground(new Color(238, 44, 44));
 		buttonReset = new JButton("RESET");
 		buttonExit = new JButton("EXIT");
 		buttonTotal = new JButton("GET TOTAL");
+		
+		buttonStartTimer = new JButton("Start Timer");
+		buttonStartTimer.setFont(new Font("Tahoma", Font.BOLD, 24));
+		buttonStopTimer = new JButton("Stop Timer");
+		buttonStopTimer.setFont(new Font("Tahoma", Font.BOLD, 24));
+		buttonResetTimer = new JButton("Reset");
+		buttonResetTimer.setFont(new Font("Tahoma", Font.BOLD, 24));
+		
 		f1ButtonWarning = new JButton("DEDUCT");
 		f2ButtonWarning = new JButton("DEDUCT");
 		f1ButtonPenalty = new JButton("DEDUCT");
@@ -167,7 +176,7 @@ public class MainWindow extends JFrame implements PointListener {
 		/// String[] entries = {"Test1", "Test2", "Test3", "Test4"};
 		ips = new JList<String>(entries);
 
-		fighter1 = new JLabel("F1:", JLabel.RIGHT);
+		fighter1 = new JLabel("F1", JLabel.RIGHT);
 		fighter1.setOpaque(true);
 		fighter1.setBackground(new Color(238, 44, 44));
 		fighter1.setFont(new Font("Tahoma", Font.BOLD, 56));
@@ -177,7 +186,7 @@ public class MainWindow extends JFrame implements PointListener {
 		f1points.setBackground(new Color(238, 44, 44));
 		f1points.setFont(new Font("Tahoma", Font.BOLD, 56));
 
-		fighter2 = new JLabel("F2:", JLabel.RIGHT);
+		fighter2 = new JLabel("F2", JLabel.RIGHT);
 		fighter2.setOpaque(true);
 		fighter2.setBackground(new Color(0, 0, 205));
 		fighter2.setFont(new Font("Tahoma", Font.BOLD, 56));
@@ -187,7 +196,7 @@ public class MainWindow extends JFrame implements PointListener {
 		f2points.setBackground(new Color(0, 0, 205));
 		f2points.setFont(new Font("Tahoma", Font.BOLD, 56));
 
-		draw = new JLabel("draw", JLabel.CENTER);
+		draw = new JLabel("Draw", JLabel.CENTER);
 		draw.setOpaque(true);
 		draw.setBackground(Color.WHITE);
 		draw.setFont(new Font("Tahoma", Font.BOLD, 56));
@@ -372,7 +381,10 @@ public class MainWindow extends JFrame implements PointListener {
 		top.add(top1, BorderLayout.NORTH);
 
 		JPanel top2 = new JPanel();
-		top2.setLayout(new GridLayout(1, 2));
+		top2.setLayout(new GridLayout(1, 5));
+		top2.add(buttonStartTimer);
+		top2.add(buttonStopTimer);
+		top2.add(buttonResetTimer);
 		top2.add(round);
 		top2.add(timeLabel);
 		top.add(top2, BorderLayout.CENTER);
@@ -636,6 +648,21 @@ public class MainWindow extends JFrame implements PointListener {
 			}
 		});
 		countdownReset.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				reset();
+			}
+		});
+		buttonStartTimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				countDown(roundLength);
+			}
+		});		
+		buttonStopTimer.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				countDownStop();
+			}
+		});
+		buttonResetTimer.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				reset();
 			}
