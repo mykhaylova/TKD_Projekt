@@ -876,85 +876,85 @@ public class MainWindow extends JFrame implements PointListener {
 	////////// UPDATE POINTS //////////////////////
 	public void updatePoints(AtomicInteger points1, AtomicInteger points2, String refereeId) {
 		if (refereeId.equals(mReferee1ID)) {
-			float nPoints1 = Float.intBitsToFloat(points1.get());
-			float nPoints2 = Float.intBitsToFloat(points2.get());
+			int nPoints1 = points1.get();
+			int nPoints2 = points2.get();
 			/// String newData = "Fighter1" + " :"
 			/// +Float.toString(nPoints1)+"\n" + "Fighter2" + " :" +
 			/// Float.toString(nPoints2);
-			String f1update = Float.toString(nPoints1);
+			String f1update = Integer.toString(nPoints1);
 			r1ResultRed.setText(f1update);
-			String f2update = Float.toString(nPoints2);
+			String f2update = Integer.toString(nPoints2);
 			r1ResultBlue.setText(f2update);
 			// r1Label.setText(refereeId);
 			/// points.setText(newData);
 		}
 		if (refereeId.equals(mReferee2ID)) {
-			float nPoints1 = Float.intBitsToFloat(points1.get());
-			float nPoints2 = Float.intBitsToFloat(points2.get());
-			String f1update = Float.toString(nPoints1);
+			int nPoints1 = points1.get();
+			int nPoints2 = points2.get();
+			String f1update = Integer.toString(nPoints1);
 			r2ResultRed.setText(f1update);
-			String f2update = Float.toString(nPoints2);
+			String f2update = Integer.toString(nPoints2);
 			r2ResultBlue.setText(f2update);
 			// r2Label.setText(refereeId);
 		}
 		if (refereeId.equals(mReferee3ID)) {
-			float nPoints1 = Float.intBitsToFloat(points1.get());
-			float nPoints2 = Float.intBitsToFloat(points2.get());
-			String f1update = Float.toString(nPoints1);
+			int nPoints1 = points1.get();
+			int nPoints2 = points2.get();
+			String f1update = Integer.toString(nPoints1);
 			r3ResultRed.setText(f1update);
-			String f2update = Float.toString(nPoints2);
+			String f2update = Integer.toString(nPoints2);
 			r3ResultBlue.setText(f2update);
 			// r3Label.setText(refereeId);
 		}
 		if (refereeId.equals(mReferee4ID)) {
-			float nPoints1 = Float.intBitsToFloat(points1.get());
-			float nPoints2 = Float.intBitsToFloat(points2.get());
-			String f1update = Float.toString(nPoints1);
+			int nPoints1 = points1.get();
+			int nPoints2 = points2.get();
+			String f1update = Integer.toString(nPoints1);
 			r4ResultRed.setText(f1update);
-			String f2update = Float.toString(nPoints2);
+			String f2update = Integer.toString(nPoints2);
 			r4ResultBlue.setText(f2update);
 			// r4Label.setText(refereeId);
 		}
 	}
 
 	public void showTotal() {
-		float totalRed = 0.0f;
-		float totalBlue = 0.0f;
+		int totalRed = 0;
+		int totalBlue = 0;
 		int drawResult = 4;
 
-		if (Float.parseFloat(r1ResultRed.getText()) > Float.parseFloat(r1ResultBlue.getText())) {
-			totalRed = totalRed + 1.0f;
+		if (Integer.parseInt(r1ResultRed.getText()) > Integer.parseInt(r1ResultBlue.getText())) {
+			totalRed = totalRed + 1;
 			drawResult = drawResult - 1;
-		} else if (Float.parseFloat(r1ResultRed.getText()) < Float.parseFloat(r1ResultBlue.getText())) {
-			totalBlue = totalBlue + 1.0f;
-			drawResult = drawResult - 1;
-		}
-
-		if (Float.parseFloat(r2ResultRed.getText()) > Float.parseFloat(r2ResultBlue.getText())) {
-			totalRed = totalRed + 1.0f;
-			drawResult = drawResult - 1;
-		} else if (Float.parseFloat(r2ResultRed.getText()) < Float.parseFloat(r2ResultBlue.getText())) {
-			totalBlue = totalBlue + 1.0f;
+		} else if (Integer.parseInt(r1ResultRed.getText()) < Integer.parseInt(r1ResultBlue.getText())) {
+			totalBlue = totalBlue + 1;
 			drawResult = drawResult - 1;
 		}
 
-		if (Float.parseFloat(r3ResultRed.getText()) > Float.parseFloat(r3ResultBlue.getText())) {
-			totalRed = totalRed + 1.0f;
+		if (Integer.parseInt(r2ResultRed.getText()) > Integer.parseInt(r2ResultBlue.getText())) {
+			totalRed = totalRed + 1;
 			drawResult = drawResult - 1;
-		} else if (Float.parseFloat(r3ResultRed.getText()) < Float.parseFloat(r3ResultBlue.getText())) {
-			totalBlue = totalBlue + 1.0f;
+		} else if (Integer.parseInt(r2ResultRed.getText()) < Integer.parseInt(r2ResultBlue.getText())) {
+			totalBlue = totalBlue + 1;
 			drawResult = drawResult - 1;
 		}
 
-		if (Float.parseFloat(r4ResultRed.getText()) > Float.parseFloat(r4ResultBlue.getText())) {
-			totalRed = totalRed + 1.0f;
+		if (Integer.parseInt(r3ResultRed.getText()) > Integer.parseInt(r3ResultBlue.getText())) {
+			totalRed = totalRed + 1;
 			drawResult = drawResult - 1;
-		} else if (Float.parseFloat(r4ResultRed.getText()) < Float.parseFloat(r4ResultBlue.getText())) {
-			totalBlue = totalBlue + 1.0f;
+		} else if (Integer.parseInt(r3ResultRed.getText()) < Integer.parseInt(r3ResultBlue.getText())) {
+			totalBlue = totalBlue + 1;
 			drawResult = drawResult - 1;
 		}
-		f1points.setText(Float.toString(totalRed));
-		f2points.setText(Float.toString(totalBlue));
+
+		if (Integer.parseInt(r4ResultRed.getText()) > Integer.parseInt(r4ResultBlue.getText())) {
+			totalRed = totalRed + 1;
+			drawResult = drawResult - 1;
+		} else if (Integer.parseInt(r4ResultRed.getText()) < Integer.parseInt(r4ResultBlue.getText())) {
+			totalBlue = totalBlue + 1;
+			drawResult = drawResult - 1;
+		}
+		f1points.setText(Integer.toString(totalRed));
+		f2points.setText(Integer.toString(totalBlue));
 		this.drawResult.setText(Integer.toString(drawResult));
 	}
 
