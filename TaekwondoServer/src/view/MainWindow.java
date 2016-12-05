@@ -53,7 +53,7 @@ public class MainWindow extends JFrame implements PointListener {
 	private JMenuBar menuBar;
 	private JMenu data, about;
 	private JMenu roundNumber, timeLeft, countdown;
-	private JMenuItem roundOne, roundTwo, roundThree, rest, halfMinute, oneMinute, twoMinutes, threeMinutes,
+	private JMenuItem roundOne, roundTwo, roundThree, rest, halfMinute, oneMinute, oneHalfMinute, twoMinutes, threeMinutes,
 			countdownStart, countdownStop, countdownReset, taekwondoDevelopers, exitServer;
 
 	// Timer & Round 1 JLabel
@@ -103,6 +103,8 @@ public class MainWindow extends JFrame implements PointListener {
 		halfMinute.setEnabled(true);
 		oneMinute = new JMenuItem("01:00");
 		oneMinute.setEnabled(true);
+		oneHalfMinute = new JMenuItem("01:30");
+		oneHalfMinute.setEnabled(true);
 		twoMinutes = new JMenuItem("02:00");
 		twoMinutes.setEnabled(true);
 		threeMinutes = new JMenuItem("03:00");
@@ -348,6 +350,7 @@ public class MainWindow extends JFrame implements PointListener {
 		data.addSeparator();
 		timeLeft.add(halfMinute);
 		timeLeft.add(oneMinute);
+		timeLeft.add(oneHalfMinute);
 		timeLeft.add(twoMinutes);
 		timeLeft.add(threeMinutes);
 		data.add(timeLeft);
@@ -627,6 +630,11 @@ public class MainWindow extends JFrame implements PointListener {
 				roundTime(1);
 			}
 		});
+		oneHalfMinute.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent ae) {
+				roundTime(90);
+			}
+		});
 		twoMinutes.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				roundTime(2);
@@ -716,7 +724,11 @@ public class MainWindow extends JFrame implements PointListener {
 			timeLabel.setText("01:00");
 			this.roundLength = 60;
 			this.roundLengthSet = 60;
-		} else if (rlength == 2) {
+		} else if (rlength == 90) {
+			timeLabel.setText("01:30");
+			this.roundLength = 90;
+			this.roundLengthSet = 90;
+		}else if (rlength == 2) {
 			timeLabel.setText("02:00");
 			this.roundLength = 120;
 			this.roundLengthSet = 120;
@@ -789,6 +801,8 @@ public class MainWindow extends JFrame implements PointListener {
 			roundTime(30);
 		} else if (roundLengthSet == 60) {
 			roundTime(1);
+		} else if (roundLengthSet == 90) {
+			roundTime(90);
 		} else if (roundLengthSet == 120) {
 			roundTime(2);
 		} else if (roundLengthSet == 180) {
