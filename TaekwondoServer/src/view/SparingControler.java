@@ -12,6 +12,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.stage.Screen;
@@ -60,6 +61,8 @@ public class SparingControler {
     @FXML
     private ChoiceBox<String> roundsLengthBoxSparing;
     
+ 
+    /*
     @FXML 
     private void initialize() {
     	
@@ -69,7 +72,7 @@ public class SparingControler {
     	roundsLengthBoxSparing.setValue("02:00");
     	roundsLengthBoxSparing.setItems(roundsLengthList);
     }
-
+*/
 
     @FXML
     void handleBackButtonAction(ActionEvent e) throws IOException {
