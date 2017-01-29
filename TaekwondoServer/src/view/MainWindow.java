@@ -859,6 +859,7 @@ public class MainWindow extends JFrame implements PointListener {
 		buttonStart.setBackground(new Color(50, 205, 50));
 		buttonStop.setBackground(null);
 		TkdServer.StartServer();
+		resetPoints();
 	}
 
 	/////// STOP //////////////////////////////////

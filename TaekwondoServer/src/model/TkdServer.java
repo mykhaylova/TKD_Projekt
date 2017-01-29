@@ -78,7 +78,7 @@ public class TkdServer
                     String[] requestBodyParts = requestBody.split(":");
                     String refereeID = requestBodyParts[0];
                     String fighterID = requestBodyParts[1];
-                    int points = Integer.valueOf(requestBodyParts[2]);
+                    float points = Float.valueOf(requestBodyParts[2]);
                     System.out.println("REQ:"+requestBody);
                     
                 	   
@@ -207,6 +207,7 @@ public class TkdServer
         try{
             hostname = InetAddress.getLocalHost().getHostName();
             InetAddress h = InetAddress.getByName(hostname);
+
             addr = new InetSocketAddress(8080);
             System.out.println("Hostname: " + hostname + " " + h.getHostAddress());
             //InetAddress ip = InetAddress.getByName("192.168.1.11");
