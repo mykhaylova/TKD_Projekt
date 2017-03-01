@@ -34,7 +34,7 @@ public class MenuControler extends Application {
 			Parent root = (Parent) loader.load();
 			Scene scene2 = new Scene(root, 1200, 650);
 			Stage stage = (Stage) (((Node) e.getSource()).getScene().getWindow());
-			stage.setTitle("Taekwondo Sparing");
+			stage.setTitle("Taekwondo Sparring");
 			stage.setResizable(false);
 			stage.setScene(scene2);
 			Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
@@ -54,7 +54,7 @@ public class MenuControler extends Application {
 	private void handleTulButtonAction(ActionEvent e) throws IOException {
 
 		FXMLLoader loader = new FXMLLoader();
-		loader.setLocation(getClass().getClassLoader().getResource("Tul.fxml"));
+		loader.setLocation(getClass().getClassLoader().getResource("Tul2.fxml"));
 		Parent root = (Parent) loader.load();
 
 		Scene scene2 = new Scene(root, 1200, 650);

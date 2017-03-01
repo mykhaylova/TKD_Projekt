@@ -14,7 +14,7 @@
         <items>
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <Button fx:id="sparingButton" mnemonicParsing="false" onAction="#handleSparingButtonAction" style="-fx-background-color: cornflowerblue;" text="Sparing" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                  <Button fx:id="sparingButton" mnemonicParsing="false" onAction="#handleSparingButtonAction" style="-fx-background-color: cornflowerblue;" text="Sparring" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <font>
                         <Font name="System Bold" size="36.0" />
                      </font>
