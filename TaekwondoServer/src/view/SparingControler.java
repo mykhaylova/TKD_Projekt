@@ -1,38 +1,60 @@
 package view;
 
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
 import java.io.IOException;
-
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
+import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.Timer;
-
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import view.MainWindow.TimeClass;
+import model.TkdServer;
+import model.TkdServer.PointListener;
 
-public class SparingControler {
+public class SparingControler implements Initializable, PointListener {
+	
+	@FXML
+	private ListView<String> listView;
+	
+	static String mReferee1ID = "referee1";
+	static String mReferee2ID = "referee2";
+	static String mReferee3ID = "referee3";
+	static String mReferee4ID = "referee4";
 
-
+	ObservableList<String> items =FXCollections.observableArrayList (getIps());
+	
+	public String[] getIps()
+	{
+		ArrayList<String> ipsAll = TkdServer.getAllIPs();
+		String[] entries = ipsAll.toArray(new String[ipsAll.size()]);
+		return entries;
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle rescources)
+	{
+		listView.setItems(items);
+	}
+	
+	
 	private int roundLength;
 	private int roundLengthSet;
 	private Timer timer;
@@ -115,8 +137,8 @@ public class SparingControler {
 	 * 
 	 * 
 	 */
-	private int czas = 120;
-	private int seconds = czas;
+	private int time = 120;
+	private int seconds = time;
 	private int rounds = 3;
 	private int round = 1;
 	private int rest = 5;
@@ -145,15 +167,15 @@ public class SparingControler {
 			//timeline.play();
 	}}	
 	private void doSomething(){
-		System.out.println("czas: "+ czas + " seconds: " + seconds + "rounds left: " + rounds + " rest: " + rest + " secondsRest: " + secondsRest);
-		if (czas>0) {
+		System.out.println("czas: "+ time + " seconds: " + seconds + "rounds left: " + rounds + " rest: " + rest + " secondsRest: " + secondsRest);
+		if (time>0) {
 			labelRound.setText("Round " + round);
-			display(czas);
-			czas--;
+			display(time);
+			time--;
 		}
-		else if (czas==0){
-			display(czas);
-			czas--;
+		else if (time==0){
+			display(time);
+			time--;
 			rounds--;
 			System.out.println("seconds: " + seconds+ "rounds left: " + rounds);
 			rest=secondsRest;
@@ -167,7 +189,7 @@ public class SparingControler {
 				labelRound.setText("Rest");
 				display(rest);
 				rest--;
-				czas=seconds;
+				time=seconds;
 				round++;
 		}
 		else {
@@ -274,6 +296,10 @@ public class SparingControler {
 	}
 
 	@FXML
+	void handleListView(ActionEvent event) {
+
+	}
+	@FXML
 	void handleExitButtonAction(ActionEvent event) {
 
 	}
@@ -285,12 +311,13 @@ public class SparingControler {
 
 	@FXML
 	void handleStartButtonAction(ActionEvent event) {
-
+		TkdServer.StartServer();
+		TkdServer.subscribe(this);
 	}
 
 	@FXML
 	void handleStopButtonAction(ActionEvent event) {
-
+		TkdServer.StopServer();
 	}
 
 	@FXML
@@ -777,39 +804,91 @@ public class SparingControler {
 		labelRoundTime.setText(roundsL);
 		switch (roundsL) {
 		case "00:30":
-			czas = 30;
+			time = 30;
 			seconds = 30;
 			break;
 		case "00:45":
-			czas = 45;
+			time = 45;
 			seconds = 45;
 			break;
 		case "01:00":
-			czas = 60;
+			time = 60;
 			seconds = 60;
 			break;
 		case "01:30":
-			czas = 90;
+			time = 90;
 			seconds = 90;
 			break;
 		case "02:00":
-			czas = 120;
+			time = 120;
 			seconds = 120;
 			break;
 		case "02:30":
-			czas = 150;
+			time = 150;
 			seconds = 150;
 			break;
 		case "03:00":
-			czas = 180;
+			time = 180;
 			seconds = 180;
 			break;
 		default:
-			czas = 120; 
+			time = 120; 
 			seconds = 120;
 			break;
 		}
-	System.out.println("czas: " + czas);	
+	System.out.println("time: " + time);	
 	}
+	
+//	public void resetPoints() {
+//		TkdServer.resetPoints();
+//		f1points.setText("0");
+//		f2points.setText("0");
+//		drawResult.setText("4");
+//		f1WarningScore.setText("0");
+//		f1Warnings = 0;
+//		f2WarningScore.setText("0");
+//		f2Warnings = 0;
+//		f1PenaltyScore.setText("0");
+//		f1Penalties = 0;
+//		f2PenaltyScore.setText("0");
+//		f2Penalties = 0;
+//	}
 
+	@Override
+	public void updatePoints(AtomicInteger points1, AtomicInteger points2, String refereeId) {
+		if (refereeId.equals(mReferee1ID)) {
+			int nPoints1 = points1.get();
+			int nPoints2 = points2.get();
+			String f1update = Integer.toString(nPoints1);
+			labelR1RedScore.setText(f1update);
+			String f2update = Integer.toString(nPoints2);
+			labelR1BlueScore.setText(f2update);			
+		}
+		if (refereeId.equals(mReferee2ID)) {
+			int nPoints1 = points1.get();
+			int nPoints2 = points2.get();
+			String f1update = Integer.toString(nPoints1);
+			labelR2RedScore.setText(f1update);
+			String f2update = Integer.toString(nPoints2);
+			labelR2BlueScore.setText(f2update);
+		}
+		if (refereeId.equals(mReferee3ID)) {
+			int nPoints1 = points1.get();
+			int nPoints2 = points2.get();
+			String f1update = Integer.toString(nPoints1);
+			labelR3RedScore.setText(f1update);
+			String f2update = Integer.toString(nPoints2);
+			labelR3BlueScore.setText(f2update);
+		}
+		if (refereeId.equals(mReferee4ID)) {
+			int nPoints1 = points1.get();
+			int nPoints2 = points2.get();
+			String f1update = Integer.toString(nPoints1);
+			labelR4RedScore.setText(f1update);
+			String f2update = Integer.toString(nPoints2);
+			labelR4BlueScore.setText(f2update);
+		}		
+	};
+
+	
 }

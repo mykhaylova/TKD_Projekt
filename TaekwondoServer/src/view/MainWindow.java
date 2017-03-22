@@ -20,7 +20,6 @@ import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.KeyStroke;
 import javax.swing.Timer;
@@ -553,8 +552,8 @@ public class MainWindow extends JFrame implements PointListener {
 
 	/////// ADD LISTENERS ////////////////////////
 	private void addListeners() {
-		TkdServer.getAllIPs();
-		TkdServer.subscribe(this);
+		//TkdServer.getAllIPs();
+		//TkdServer.subscribe(this);
 		buttonStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				start();
@@ -680,29 +679,8 @@ public class MainWindow extends JFrame implements PointListener {
 				exit();
 			}
 		});
-		taekwondoDevelopers.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent ae) {
-				taekwondoDevelopers();
-			}
-		});
 	}
-	
-	//////// TAEKWONDO DEVELOPERS ///////////////
-	private void taekwondoDevelopers () {
-		StringBuilder sb = new StringBuilder();
-		sb.append("HTL SPENGERGASSE 2016/17");
-		sb.append(System.getProperty("line.separator"));
-		sb.append("Mariya Mykhaylova");
-		sb.append(System.getProperty("line.separator"));
-		sb.append("Marcin Puka");
-		sb.append(System.getProperty("line.separator"));
-		sb.append("Marlon Gallardo");
-		sb.append(System.getProperty("line.separator"));
-		sb.append("Yuriy Kryvonos");
-		
-		
-		JOptionPane.showMessageDialog(this, sb, "Taekwondo Development Team", JOptionPane.INFORMATION_MESSAGE);
-	}
+
 	
 
 	//////// WHICH ROUND ////////////////////////
