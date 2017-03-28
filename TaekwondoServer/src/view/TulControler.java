@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import model.TkdServer;
 
 public class TulControler {
 
@@ -39,6 +40,89 @@ public class TulControler {
 	private Label bottomLeftLabelTul;
 	@FXML
 	private Label bottomRightLabelTul;
+	@FXML 
+	private Label r1labelBlueLevel1;
+	@FXML
+	private Label r1labelRedLevel1;
+	@FXML
+	private Label r1labelBlueLevel2;
+	@FXML 
+	private Label r1labelRedLevel2;
+	@FXML
+	private Label r1labelBlueLevel3;
+	@FXML 
+	private Label r1labelRedLevel3;
+	@FXML 
+	private Label r2labelBlueLevel1;
+	@FXML
+	private Label r2labelRedLevel1;
+	@FXML
+	private Label r2labelBlueLevel2;
+	@FXML 
+	private Label r2labelRedLevel2;
+	@FXML
+	private Label r2labelBlueLevel3;
+	@FXML 
+	private Label r2labelRedLevel3;
+	@FXML 
+	private Label r3labelBlueLevel1;
+	@FXML
+	private Label r3labelRedLevel1;
+	@FXML
+	private Label r3labelBlueLevel2;
+	@FXML 
+	private Label r3labelRedLevel2;
+	@FXML
+	private Label r3labelBlueLevel3;
+	@FXML 
+	private Label r3labelRedLevel3;
+	@FXML 
+	private Label r4labelBlueLevel1;
+	@FXML
+	private Label r4labelRedLevel1;
+	@FXML
+	private Label r4labelBlueLevel2;
+	@FXML 
+	private Label r4labelRedLevel2;
+	@FXML
+	private Label r4labelBlueLevel3;
+	@FXML 
+	private Label r4labelRedLevel3;
+	@FXML 
+	private Label r5labelBlueLevel1;
+	@FXML
+	private Label r5labelRedLevel1;
+	@FXML
+	private Label r5labelBlueLevel2;
+	@FXML 
+	private Label r5labelRedLevel2;
+	@FXML
+	private Label r5labelBlueLevel3;
+	@FXML 
+	private Label r5labelRedLevel3;
+	@FXML
+	private Label r1labelBlueTotal;
+	@FXML
+	private Label r1labelRedTotal;
+	@FXML
+	private Label r2labelBlueTotal;
+	@FXML
+	private Label r2labelRedTotal;
+	@FXML
+	private Label r3labelBlueTotal;
+	@FXML 
+	private Label r3labelRedTotal;
+	@FXML
+	private Label r4labelBlueTotal;
+	@FXML 
+	private Label r4labelRedTotal;
+	@FXML
+	private Label r5labelBlueTotal;
+	@FXML 
+	private Label r5labelRedTotal;
+	
+
+
 
 	@FXML
 	private void handleBackButtonAction(ActionEvent e) throws IOException {
@@ -74,6 +158,8 @@ public class TulControler {
 	private void handleStartButtonAction(ActionEvent e) throws IOException {
 		startButtonTul.setStyle("-fx-base: #32cd32");
 		stopButtonTul.setStyle("-fx-base: #d0d0d0");
+		///TkdServer.StartServer();
+		///TkdServer.subscribe(this);	
 
 	}
 
@@ -81,6 +167,7 @@ public class TulControler {
 	private void handleStopButtonAction(ActionEvent e) throws IOException {
 		stopButtonTul.setStyle("-fx-base: #ff0000");
 		startButtonTul.setStyle("-fx-base: #d0d0d0");
+		///TkdServer.StopServer();
 	}
 
 	public void topLeftLabelTulSetText(String text) {

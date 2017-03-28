@@ -218,12 +218,12 @@
                   </SplitPane>
                   <HBox layoutX="10.0" layoutY="46.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                      <children>
-                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="6">
+                        <Label fx:id="r2labelBlueLevel1" alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="6">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="6">
+                        <Label fx:id="r2labelRedLevel1" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="6">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -234,12 +234,12 @@
                      <children>
                         <HBox prefHeight="37.0" prefWidth="208.0">
                            <children>
-                              <Label alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="6">
+                              <Label fx:id="r3labelBlueLevel1" alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="6">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
                               </Label>
-                              <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="6">
+                              <Label fx:id="r3labelRedLevel1" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="6">
                                  <font>
                                     <Font name="System Bold" size="24.0" />
                                  </font>
@@ -255,12 +255,12 @@
                   </Label>
                   <HBox prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r2labelBlueLevel2" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r2labelRedLevel2" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -269,12 +269,12 @@
                   </HBox>
                   <HBox layoutX="210.0" layoutY="71.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r2labelBlueLevel3" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r2labelRedLevel3" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -283,12 +283,12 @@
                   </HBox>
                   <HBox layoutX="210.0" layoutY="104.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
                      <children>
-                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="10">
+                        <Label fx:id="r2labelBlueTotal" alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="10">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="10">
+                        <Label fx:id="r2labelRedTotal" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="10">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -317,12 +317,12 @@
                   </Label>
                   <HBox layoutX="210.0" layoutY="48.0" prefHeight="37.0" prefWidth="208.0" GridPane.rowIndex="1">
                      <children>
-                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="6">
+                        <Label fx:id="r1labelBlueLevel1" alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="6">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="6">
+                        <Label fx:id="r1labelRedLevel1" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="6">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -331,12 +331,12 @@
                   </HBox>
                   <HBox prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="3" GridPane.rowIndex="1">
                      <children>
-                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="6">
+                        <Label fx:id="r4labelBlueLevel1" alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="6">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="6">
+                        <Label fx:id="r4labelRedLevel1" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="6">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -345,12 +345,12 @@
                   </HBox>
                   <HBox prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="4" GridPane.rowIndex="1">
                      <children>
-                        <Label alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="6">
+                        <Label fx:id="r5labelBlueLevel1" alignment="CENTER" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="6">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="6">
+                        <Label fx:id="r5labelRedLevel1" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="6">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -359,12 +359,12 @@
                   </HBox>
                   <HBox prefHeight="37.0" prefWidth="208.0" GridPane.rowIndex="2">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r1labelBlueLevel2" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r1labelRedLevel2" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -373,12 +373,12 @@
                   </HBox>
                   <HBox layoutX="10.0" layoutY="85.0" prefHeight="37.0" prefWidth="208.0" GridPane.rowIndex="3">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r1labelBlueLevel3" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r1labelRedLevel3" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -387,12 +387,12 @@
                   </HBox>
                   <HBox prefHeight="37.0" prefWidth="208.0" GridPane.rowIndex="4">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="10">
+                        <Label fx:id="r1labelBlueTotal" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="10">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="10">
+                        <Label fx:id="r1labelRedTotal" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="10">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -401,12 +401,12 @@
                   </HBox>
                   <HBox layoutX="210.0" layoutY="85.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r3labelBlueLevel2" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r3labelRedLevel2" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -415,12 +415,12 @@
                   </HBox>
                   <HBox layoutX="410.0" layoutY="85.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="2" GridPane.rowIndex="3">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r3labelBlueLevel3" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r3labelRedLevel3" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -429,12 +429,12 @@
                   </HBox>
                   <HBox layoutX="410.0" layoutY="122.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="2" GridPane.rowIndex="4">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="10">
+                        <Label fx:id="r3labelBlueTotal" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="10">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="10">
+                        <Label fx:id="r3labelRedTotal" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="10">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -443,12 +443,12 @@
                   </HBox>
                   <HBox layoutX="410.0" layoutY="159.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="3" GridPane.rowIndex="2">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r4labelBlueLevel2" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r4labelRedLevel2" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -457,12 +457,12 @@
                   </HBox>
                   <HBox layoutX="610.0" layoutY="85.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="3" GridPane.rowIndex="3">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r4labelBlueLevel3" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r4labelRedLevel3" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -471,12 +471,12 @@
                   </HBox>
                   <HBox layoutX="610.0" layoutY="122.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="10">
+                        <Label fx:id="r4labelBlueTotal" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="10">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="10">
+                        <Label fx:id="r4labelRedTotal" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="10">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -485,12 +485,12 @@
                   </HBox>
                   <HBox layoutX="610.0" layoutY="159.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="4" GridPane.rowIndex="2">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r5labelBlueLevel2" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r5labelRedLevel2" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -499,12 +499,12 @@
                   </HBox>
                   <HBox layoutX="810.0" layoutY="85.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="4" GridPane.rowIndex="3">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r5labelBlueLevel3" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
+                        <Label fx:id="r5labelRedLevel3" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="2">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
@@ -513,12 +513,12 @@
                   </HBox>
                   <HBox layoutX="810.0" layoutY="122.0" prefHeight="37.0" prefWidth="208.0" GridPane.columnIndex="4" GridPane.rowIndex="4">
                      <children>
-                        <Label alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="10">
+                        <Label fx:id="r5labelBlueTotal" alignment="CENTER" prefHeight="43.0" prefWidth="100.0" style="-fx-text-fill: cornflowerblue; -fx-background-color: white; -fx-border-color: black;" text="10">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
                         </Label>
-                        <Label alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="10">
+                        <Label fx:id="r5labelRedTotal" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="37.0" prefWidth="100.0" style="-fx-text-fill: crimson; -fx-background-color: white; -fx-border-color: black;" text="10">
                            <font>
                               <Font name="System Bold" size="24.0" />
                            </font>
