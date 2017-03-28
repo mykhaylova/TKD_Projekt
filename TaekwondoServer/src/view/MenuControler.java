@@ -25,9 +25,7 @@ public class MenuControler extends Application {
 	@FXML
 	private void handleSparingButtonAction(ActionEvent e) throws IOException {
 
-		boolean oldSparingWindow = ConfirmationBox.show("Which sparing window?", "Confirmation", "Old", "New");
 
-		if (oldSparingWindow == false) {
 
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getClassLoader().getResource("Sparing.fxml"));
@@ -41,9 +39,7 @@ public class MenuControler extends Application {
 			stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
 			stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
 			stage.show();
-		} else {
-			doExit();
-		}
+
 	}
 
 	private void doExit() {
