@@ -1,5 +1,7 @@
 package view;
 
+import java.awt.Toolkit;
+import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -8,6 +10,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.Timer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -24,6 +27,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -32,6 +36,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.TkdServer;
 import model.TkdServer.PointListener;
+import view.MainWindow.TimeClass;
 
 public class SparingControler implements Initializable, PointListener {
 	
@@ -58,11 +63,15 @@ public class SparingControler implements Initializable, PointListener {
 	{
 		listView.setItems(items);
 	}
-	
-	
+
 	private int roundLength;
 	private int roundLengthSet;
 	private Timer timer;
+	private int rblue;
+	private int rred;
+	private int draw;
+	private boolean drawBool;
+	private boolean extraBool;
 	@FXML
 	private Label labelRound;
 	@FXML
@@ -97,6 +106,10 @@ public class SparingControler implements Initializable, PointListener {
 	private Label labelDrawResult;
 	@FXML
 	private Label labelRedResult;
+	@FXML
+	private Label blueScore;
+	@FXML
+	private Label redScore;
 
 	@FXML
 	private Button minusWarningBlueButtonSparing;
@@ -116,6 +129,14 @@ public class SparingControler implements Initializable, PointListener {
 	private Button plusPenaltyRedButtonSparing;
 	@FXML
 	private Button newSparingButtonAction;
+	@FXML 
+	private Button buttonStopTimer;
+	@FXML
+	private Button buttonStartTimer;
+	@FXML
+	private Button buttonResetTimer;
+	@FXML
+	private Button buttonExtraTime;
 
 	@FXML
 	private ChoiceBox<String> numberOfRoundsBoxSparing;
@@ -124,6 +145,7 @@ public class SparingControler implements Initializable, PointListener {
 	private ChoiceBox<String> roundsLengthBoxSparing;
 	
     // private class constant and some variables
+
     private static final Integer STARTTIME = 120;
     private Integer STARTTIME1;
     //private Timeline timeline
@@ -142,17 +164,26 @@ public class SparingControler implements Initializable, PointListener {
 	 * 
 	 * 
 	 */
+    
 	private int time = 120;
 	private int seconds = time;
-	private int rounds = 3;
+	private int rounds = 2;
 	private int round = 1;
-	private int rest = 5;
+	private int rest = 30;
 	private int secondsRest = rest;
+	
+	private int roundsSet = 2;
+	private int roundSet = 1;
+	private int roundlengthSet = 120;
+	private int restSet = 30;
+
 	@FXML 
 	private void handleButtonStartTimer(ActionEvent e) {
 		//int r = 120;
 		//countDown(r);
-		
+		buttonExtraTime.setDisable(true);
+		buttonStartTimer.setDisable(true);
+		buttonStopTimer.setDisable(false);
 		System.out.println("StartTimer");
 		timeline.setCycleCount(Animation.INDEFINITE);
 		// timeline.play();
@@ -161,49 +192,132 @@ public class SparingControler implements Initializable, PointListener {
 
 	
 	private void testTimer() {
-		System.out.println(timeline);
+		//System.out.println(timeline);
 		if (timeline!=null) {
 			//timeline.setCycleCount(Animation.INDEFINITE);
 			timeline.play();
 		} else {		
-			System.out.println(timeline);
+			//System.out.println(timeline);
 			//this.timeline = new Timeline(new KeyFrame(Duration.seconds(1), ae -> doSomething())); 
 			//timeline.setCycleCount(Animation.INDEFINITE);
 			//timeline.play();
 	}}	
 	private void doSomething(){
+
+		///System.out.println("Rounds: " + rounds);
+
 		System.out.println("time: "+ time + " seconds: " + seconds + "rounds left: " + rounds + " rest: " + rest + " secondsRest: " + secondsRest);
 		if (time>0) {
-			labelRound.setText("Round " + round);
+			///System.out.println("Czas>0");
+			if (extraBool!= true){
+				labelRound.setText("Round " + round);
+			}
 			display(time);
 			time--;
 		}
 		else if (time==0){
+			///System.out.println("time==0");
 			display(time);
 			time--;
 			rounds--;
 			System.out.println("seconds: " + seconds+ "rounds left: " + rounds);
 			rest=secondsRest;
+			updateScore();
 		}
 		else if (rounds>0 && rest>0){
+			disableWarningAndPenaltyB();
+			///System.out.println("rest>0");
 			labelRound.setText("Rest");
 			display(rest);
 			rest--;
 		}
-		else if (rounds>0 && rest==0) {
+		else if (rounds>=0 && rest==0) {
+			///System.out.println("rest==0");
 				labelRound.setText("Rest");
 				display(rest);
 				rest--;
 				time=seconds;
 				round++;
+				// RESET THE REFEREES RESULT'S AND RESULT
+				resetTemporaryResults();
+				resetWarningAndPenalty();
+				enableWarningAndPenaltyB();
 		}
 		else {
+			///System.out.println("else Time line stop");
 			timeline.stop();
+			buttonStopTimer.setDisable(true);
+			checkDraw();
+			enableExtraTime();
+			extraBool = false;
 		}
 	}
 	
-	public void display (int time) {
-		int counter = time;
+
+	/*MERGE CONFLICT
+	 * public void display (int time) {
+		int counter = time;*/
+
+	private void updateScore() {
+		if (rblue> rred) {
+			givePoint("blue");
+		} else if (rblue< rred){
+			givePoint("red");
+		} else {
+			givePoint("blue");
+			givePoint("red");
+		}
+		
+	}
+	
+	private void givePoint(String f) {
+		if (f.equals("blue")) {
+			int blueS = Integer.parseInt(blueScore.getText());
+			blueS++;
+			blueScore.setText(String.valueOf(blueS));
+		} else {
+			int redS = Integer.parseInt(redScore.getText());
+			redS++;
+			redScore.setText(String.valueOf(redS));
+		}
+	}
+	
+	private void checkDraw() {
+		int blueS = Integer.parseInt(blueScore.getText());
+		int redS = Integer.parseInt(redScore.getText());
+		///System.out.println("BlueS: " + blueS + " RedS: " + redS);
+		if (blueS==redS){
+			drawBool = true;
+		}
+		///System.out.println("DrawB: " + drawBool);
+	}
+	
+	private void resetTemporaryResults(){
+
+			labelR1BlueScore.setText("0");
+			labelR2BlueScore.setText("0");
+			labelR3BlueScore.setText("0");
+			labelR4BlueScore.setText("0");
+			labelR4RedScore.setText("0");
+			labelR1RedScore.setText("0");
+			labelR2RedScore.setText("0");
+			labelR3RedScore.setText("0");
+			
+			updateResult();
+	}
+	
+	private void enableExtraTime () {
+		if(drawBool){
+			buttonExtraTime.setDisable(false);
+		}
+	}
+	
+	
+
+
+	public void display (int czas) {
+		int counter = czas;
+
 			int minutes = counter / 60;
 			int seconds = counter % 60;
 			if (counter >= 1) {
@@ -275,12 +389,35 @@ public class SparingControler implements Initializable, PointListener {
 		 timeline.play();
 	}
 
-*/	
+	////////////// //////////////// RESET///////////////////////////////////////////////77
+*/	@FXML 
+	private void handleButtonResetTimer (ActionEvent e){
+		pauseAction();
+		time = roundlengthSet;
+		rounds = roundsSet;
+		round = roundSet;
+		rest = restSet;
+		resetTemporaryResults();
+		resetWarningAndPenalty();
+		resetBlueRedScore();
+		buttonExtraTime.setDisable(true);
+		buttonStartTimer.setDisable(false);
+		buttonStopTimer.setDisable(true);
+		setLabelText(1);
+		display(time);
+		System.out.println("RESET time: " + time + "roundlengthSet: " + roundlengthSet + "rounds: "+rounds + "roundsSet: " + roundsSet );
+	
+	}
 	@FXML 
 	private void handleButtonStopTimer(ActionEvent e) {
-		timeline.pause();
-	
+		pauseAction();
 		System.out.println("Stop Timer");
+	}
+	
+	private void pauseAction () {
+		timeline.pause();
+		buttonStopTimer.setDisable(true);
+		buttonStartTimer.setDisable(false);
 	}
 
 	@FXML
@@ -299,11 +436,12 @@ public class SparingControler implements Initializable, PointListener {
 		stage.show();
 
 	}
-
+	
 	@FXML
 	void handleListView(ActionEvent event) {
 
 	}
+
 	@FXML
 	void handleExitButtonAction(ActionEvent event) {
 
@@ -583,6 +721,7 @@ public class SparingControler implements Initializable, PointListener {
 
 	}
 
+	//////// UPDATE RESULT /////////////////////////////////////////
 	private void updateResult() {
 
 		int r1BlueScore = Integer.parseInt(labelR1BlueScore.getText());
@@ -594,9 +733,9 @@ public class SparingControler implements Initializable, PointListener {
 		int r4BlueScore = Integer.parseInt(labelR4BlueScore.getText());
 		int r4RedScore = Integer.parseInt(labelR4RedScore.getText());
 
-		int rblue = 0;
-		int rred = 0;
-		int draw = 0;
+		rblue = 0;
+		rred = 0;
+		draw = 0;
 
 		if (r1BlueScore > r1RedScore) {
 			rblue++;
@@ -626,7 +765,7 @@ public class SparingControler implements Initializable, PointListener {
 		} else {
 			draw++;
 		}
-		System.out.println(rblue + "-" + draw + "-" + rred);
+		/// System.out.println(rblue + "-" + draw + "-" + rred);
 		/**
 		 * labelBlueResult.setText(Integer.toString(rblue));
 		 * labelRedResult.setText(Integer.toString(rred));
@@ -721,71 +860,130 @@ public class SparingControler implements Initializable, PointListener {
 	
 	@FXML
 	private void handleNewSparingButtonAction(ActionEvent e) throws IOException {
-
-		String editorResults = ListBox.show("Number of Rounds:", "Sparring Editor", "Ready", "Cancel");
+		
+		pauseAction();
+		String editorResults = ListBox.show("Noumber of Rounds:", "Sparring Editor", "Ready", "Cancel");
 
 		if (editorResults == null) {
 			
 		} else {
-			System.out.println("TRUE");
-			System.out.println("Sparing controler received from listBox: " + editorResults);
-			
+			//System.out.println("TRUE");
+			//System.out.println("Sparing controler received from listBox: " + editorResults);
+			setLabelText(1);
 			String roundsN = editorResults.substring(0, 1);
-			System.out.println("roundsN String: " + roundsN );
+			//System.out.println("roundsN String: " + roundsN );
 			setRoundsNumber(roundsN);
 			String roundsL = editorResults.substring(1, 6);
-			System.out.println("roundsL String: " + roundsL);
+			//System.out.println("roundsL String: " + roundsL);
 			setRoundsLength(roundsL);
 			String restsL = editorResults.substring(6, 11);
-			System.out.println("restL String: " + restsL);
+			//System.out.println("restL String: " + restsL);
 			setRestsLength(restsL);
 			//doExit();
+			resetTemporaryResults();
+			resetBlueRedScore();
+			resetWarningAndPenalty();
+			updateResult();
+		}
+	}
+	
+	/*SHOWS ERROR!!!!
+	 * 
+	 * @FXML
+	private void handleExtraTimeButtonAction (ActionEvent e) {
+		String extraTime = ExtraTimeBox.show("Extra Time", "Extra Time Editor", "Ready", "Cancel");
+		
+		if (extraTime== null){
+			
+		} else {
+			//System.out.println("Sparing controler received from ExtraTimeBox: " + extraTime);
+			setLabelText(2);
+			setRoundsNumber("1");
+			setRoundsLength(extraTime);
+			resetTemporaryResults();
+			resetWarningAndPenalty();
+			buttonStartTimer.setDisable(false);
+		}
+	}*/
+	
+	private void resetBlueRedScore () {
+		blueScore.setText("0");
+		redScore.setText("0");
+	}
+	
+	private void resetWarningAndPenalty() {
+		
+		labelWarningBlue.setText("0");
+		labelPenaltyBlue.setText("0");
+		labelWarningRed.setText("0");
+		labelPenaltyRed.setText("0");
+	}
+	
+	private void setLabelText (int x){
+		if (x==1)
+		{
+			labelRound.setText("Round 1");
+		}else {
+			labelRound.setText("Extra Time");
+			extraBool = true;
 		}
 	}
 	
 	private void setRoundsNumber(String roundsN) {
-		labelRound.setText("Round 1");
+		//labelRound.setText("Round 1");
 		switch (roundsN) {
 		case "1":
 			rounds = 1;
+			roundsSet = 1;
 			round = 1;
+			roundSet = 1;
 			break;
 		case "2":
 			rounds = 2;
+			roundsSet =2;
 			round = 1;
+			roundSet =1;
 			break;
 		case "3":
 			rounds = 3;
+			roundsSet = 3;
 			round = 1;
-		default:
-			rounds = 2;
-			round = 1;
+			roundSet =1;
+		//default:
+		//	rounds = 2;
+		//	round = 1;
 		}
-		
+		System.out.println("SET ROUNDS NUMBER - rounds: " + rounds);
 	}
 
 
 	private void setRestsLength(String restsL) {
 		// TODO Auto-generated method stub
+
 		switch (restsL) {
 		case "00:30":
 			rest = 30;
+			restSet = 30;
 			secondsRest = 30;
 			break;
 		case "00:45":
 			rest = 45;
+			restSet = 45;
 			secondsRest = 45;
 			break;
 		case "01:00":
 			rest = 60;
+			restSet = 60;
 			secondsRest = 60;
 			break;
 		case "01:30":
 			rest = 90;
+			restSet = 90;
 			secondsRest = 90;
 			break;
 		case "02:00":
 			rest = 120;
+			restSet = 120;
 			secondsRest = 120;
 			break;
 		case "02:30":
@@ -794,10 +992,12 @@ public class SparingControler implements Initializable, PointListener {
 			break;
 		case "03:00":
 			rest = 180;
+			restSet = 180;
 			secondsRest = 180;
 			break;
 		default:
 			rest = 30; 
+			//////////////////////// ???
 			secondsRest = 30;
 			break;
 		}
@@ -810,37 +1010,46 @@ public class SparingControler implements Initializable, PointListener {
 		switch (roundsL) {
 		case "00:30":
 			time = 30;
+			roundlengthSet = 30;
 			seconds = 30;
 			break;
 		case "00:45":
 			time = 45;
+			roundlengthSet = 45;
 			seconds = 45;
 			break;
 		case "01:00":
 			time = 60;
+			roundlengthSet = 60;
 			seconds = 60;
 			break;
 		case "01:30":
 			time = 90;
+			roundlengthSet = 90;
 			seconds = 90;
 			break;
 		case "02:00":
 			time = 120;
+			roundlengthSet = 120;
 			seconds = 120;
 			break;
 		case "02:30":
 			time = 150;
+			roundlengthSet = 150;
 			seconds = 150;
 			break;
 		case "03:00":
 			time = 180;
+			roundlengthSet = 180;
 			seconds = 180;
 			break;
 		default:
 			time = 120; 
+			roundlengthSet = 120;
 			seconds = 120;
 			break;
 		}
+
 	System.out.println("time: " + time);	
 	}	
 	
@@ -901,5 +1110,29 @@ public class SparingControler implements Initializable, PointListener {
 				}
 			};			
 		backgroundhread.restart();
+	}
+
+	/// System.out.println("SET ROUNDS LENGTH czas: " + time);	
+	//}
+	
+	private void disableWarningAndPenaltyB () {
+		minusWarningBlueButtonSparing.setDisable(true);
+		plusWarningBlueButtonSparing.setDisable(true);
+		minusPenaltyBlueButtonSparing.setDisable(true);
+		plusPenaltyBlueButtonSparing.setDisable(true);
+		minusWarningRedButtonSparing.setDisable(true);
+		plusWarningRedButtonSparing.setDisable(true);
+		minusPenaltyRedButtonSparing.setDisable(true);
+		plusPenaltyRedButtonSparing.setDisable(true);
+	}
+	private void enableWarningAndPenaltyB () {
+		minusWarningBlueButtonSparing.setDisable(false);
+		plusWarningBlueButtonSparing.setDisable(false);
+		minusPenaltyBlueButtonSparing.setDisable(false);
+		plusPenaltyBlueButtonSparing.setDisable(false);
+		minusWarningRedButtonSparing.setDisable(false);
+		plusWarningRedButtonSparing.setDisable(false);
+		minusPenaltyRedButtonSparing.setDisable(false);
+		plusPenaltyRedButtonSparing.setDisable(false);
 	}
 }

@@ -39,5 +39,15 @@
             <Image url="@../bin/view/logo1.jpg" />
          </image>
       </ImageView>
+      <ImageView fitHeight="231.0" fitWidth="300.0" layoutX="163.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="806.0">
+         <image>
+            <Image url="@Img/Logo%20ITF-Austria.jpg" />
+         </image>
+      </ImageView>
+      <ImageView fitHeight="185.0" fitWidth="260.0" layoutX="835.0" layoutY="177.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="150.0">
+         <image>
+            <Image url="@Img/Logo%20ITF%20neu.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

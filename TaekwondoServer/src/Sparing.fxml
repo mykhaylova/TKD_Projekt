@@ -5,6 +5,8 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -27,7 +29,7 @@
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                      <children>
                         <Label layoutX="298.0" layoutY="46.0" style="-fx-background-color: crimson;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                        <ListView layoutX="229.0" layoutY="114.0" prefHeight="70.0" prefWidth="355.0" />
+                     	<ListView layoutX="229.0" layoutY="114.0" prefHeight="70.0" prefWidth="355.0" />
                      </children>
                   </AnchorPane>
               </items>
@@ -103,12 +105,12 @@
             <RowConstraints maxHeight="78.0" minHeight="0.0" prefHeight="0.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="topLeftLabelTul" alignment="CENTER" prefHeight="141.0" prefWidth="352.0" style="-fx-background-color: cornflowerblue; -fx-border-color: black;" text="0">
+            <Label fx:id="blueScore" alignment="CENTER" prefHeight="141.0" prefWidth="352.0" style="-fx-background-color: cornflowerblue; -fx-border-color: black;" text="0">
                <font>
                   <Font size="70.0" />
                </font>
             </Label>
-            <Label fx:id="topRightLabelTul" alignment="CENTER" prefHeight="141.0" prefWidth="352.0" style="-fx-border-color: black; -fx-background-color: crimson;" text="0" GridPane.columnIndex="4">
+            <Label fx:id="redScore" alignment="CENTER" prefHeight="141.0" prefWidth="352.0" style="-fx-border-color: black; -fx-background-color: crimson;" text="0" GridPane.columnIndex="4">
                <font>
                   <Font size="70.0" />
                </font>
@@ -117,12 +119,69 @@
                <bottom>
                   <HBox prefHeight="31.0" prefWidth="278.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="buttonStartTimer" mnemonicParsing="false" onAction="#handleButtonStartTimer" prefHeight="38.0" prefWidth="45.0" text="Play" />
-                        <Button fx:id="buttonStopTimer" mnemonicParsing="false" onAction="#handleButtonStopTimer" prefHeight="38.0" prefWidth="45.0" text="Stop" />
-                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="46.0" text="Back" />
-                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="46.0" text="Forward" />
-                        <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="46.0" text="Cancel" />
-                        <Button fx:id="newSparingButtonAction" mnemonicParsing="false" onAction="#handleNewSparingButtonAction" prefHeight="38.0" prefWidth="51.0" text="New" />
+                        <Button fx:id="buttonStartTimer" mnemonicParsing="false" onAction="#handleButtonStartTimer" prefHeight="38.0" prefWidth="45.0">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Img/1489945824_black_4_audio_play.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="buttonStopTimer" mnemonicParsing="false" onAction="#handleButtonStopTimer" prefHeight="38.0" prefWidth="45.0">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Img/1489945082_black_4_audio_pause.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="buttonResetTimer" mnemonicParsing="false" onAction="#handleButtonResetTimer" prefHeight="38.0" prefWidth="46.0">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Img/1489954089_black_2_audio_simple_repeat_2.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="buttonBackTimer" mnemonicParsing="false" prefHeight="38.0" prefWidth="46.0">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Img/1489946061_black_4_audio_step_back.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="buttonForwardTimer" layoutX="146.0" layoutY="10.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="46.0">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Img/1489946155_black_4_audio_step_forward.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="buttonExtraTime" layoutX="146.0" layoutY="10.0" mnemonicParsing="false" onAction="#handleExtraTimeButtonAction" prefHeight="38.0" prefWidth="46.0">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="23.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Img/1489945974_black_5_favorite_star.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="newSparingButtonAction" mnemonicParsing="false" onAction="#handleNewSparingButtonAction" prefHeight="38.0" prefWidth="51.0">
+                           <graphic>
+                              <ImageView fitHeight="22.0" fitWidth="22.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Img/1489945503_black_8_audio_enhancement.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
                      </children>
                   </HBox>
                </bottom>
@@ -425,6 +484,6 @@
          </children>
       </GridPane>
       <HBox prefHeight="100.0" prefWidth="200.0" />
-      <ListView fx:id="listView" layoutX="822.0" layoutY="568.0" prefHeight="79.0" prefWidth="363.0" />
+       <ListView fx:id="listView" layoutX="822.0" layoutY="568.0" prefHeight="79.0" prefWidth="363.0" />
    </children>
 </AnchorPane>
