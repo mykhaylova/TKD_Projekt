@@ -552,8 +552,8 @@ public class MainWindow extends JFrame implements PointListener {
 
 	/////// ADD LISTENERS ////////////////////////
 	private void addListeners() {
-		//TkdServer.getAllIPs();
-		//TkdServer.subscribe(this);
+		TkdServer.getAllIPs();
+		TkdServer.subscribe(this);
 		buttonStart.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				start();

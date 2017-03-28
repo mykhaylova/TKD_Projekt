@@ -9,8 +9,12 @@ import javax.swing.Timer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -33,13 +37,14 @@ public class SparingControler implements Initializable, PointListener {
 	
 	@FXML
 	private ListView<String> listView;
+	private Service<Void> backgroundhread;	
 	
 	static String mReferee1ID = "referee1";
 	static String mReferee2ID = "referee2";
 	static String mReferee3ID = "referee3";
 	static String mReferee4ID = "referee4";
 
-	ObservableList<String> items =FXCollections.observableArrayList (getIps());
+	ObservableList<String> items = FXCollections.observableArrayList (getIps());
 	
 	public String[] getIps()
 	{
@@ -167,7 +172,7 @@ public class SparingControler implements Initializable, PointListener {
 			//timeline.play();
 	}}	
 	private void doSomething(){
-		System.out.println("czas: "+ time + " seconds: " + seconds + "rounds left: " + rounds + " rest: " + rest + " secondsRest: " + secondsRest);
+		System.out.println("time: "+ time + " seconds: " + seconds + "rounds left: " + rounds + " rest: " + rest + " secondsRest: " + secondsRest);
 		if (time>0) {
 			labelRound.setText("Round " + round);
 			display(time);
@@ -197,8 +202,8 @@ public class SparingControler implements Initializable, PointListener {
 		}
 	}
 	
-	public void display (int czas) {
-		int counter = czas;
+	public void display (int time) {
+		int counter = time;
 			int minutes = counter / 60;
 			int seconds = counter % 60;
 			if (counter >= 1) {
@@ -312,7 +317,7 @@ public class SparingControler implements Initializable, PointListener {
 	@FXML
 	void handleStartButtonAction(ActionEvent event) {
 		TkdServer.StartServer();
-		TkdServer.subscribe(this);
+		TkdServer.subscribe(this);		
 	}
 
 	@FXML
@@ -837,58 +842,64 @@ public class SparingControler implements Initializable, PointListener {
 			break;
 		}
 	System.out.println("time: " + time);	
+	}	
+	
+	public void updatePoints(AtomicInteger points1, AtomicInteger points2, String refereeId) 
+	{						
+		backgroundhread = new Service<Void>() 
+		{
+			@Override
+			protected Task<Void> createTask() 
+			{				
+				return new Task<Void>() 
+				{				
+					@Override
+					protected Void call() throws Exception 
+					{
+						Platform.runLater(() -> 
+						{                   
+                               	if (refereeId.equals(mReferee1ID)) 
+                               	{        							
+                            		SimpleIntegerProperty nPoints1 = new SimpleIntegerProperty();
+                            		SimpleIntegerProperty nPoints2 = new SimpleIntegerProperty();
+                            		nPoints1.set(points1.get());
+                            		nPoints2.set(points2.get());        						        						       					
+        							labelR1RedScore.textProperty().bind(nPoints1.asString());
+        							labelR1BlueScore.textProperty().bind(nPoints2.asString());        									
+        						}        						
+        						if (refereeId.equals(mReferee2ID))
+        						{        						 
+        							SimpleIntegerProperty nPoints1 = new SimpleIntegerProperty();
+                            		SimpleIntegerProperty nPoints2 = new SimpleIntegerProperty();
+                            		nPoints1.set(points1.get());
+                            		nPoints2.set(points2.get());        						        						       					
+        							labelR2BlueScore.textProperty().bind(nPoints1.asString());
+        							labelR2RedScore.textProperty().bind(nPoints2.asString());  
+        						}
+        						if (refereeId.equals(mReferee3ID)) 
+        						{        						
+        							SimpleIntegerProperty nPoints1 = new SimpleIntegerProperty();
+                            		SimpleIntegerProperty nPoints2 = new SimpleIntegerProperty();
+                            		nPoints1.set(points1.get());
+                            		nPoints2.set(points2.get());        						        						       					
+        							labelR3BlueScore.textProperty().bind(nPoints1.asString());
+        							labelR3RedScore.textProperty().bind(nPoints2.asString());  
+        						}
+        						if (refereeId.equals(mReferee4ID)) 
+        						{        						
+        							SimpleIntegerProperty nPoints1 = new SimpleIntegerProperty();
+                            		SimpleIntegerProperty nPoints2 = new SimpleIntegerProperty();
+                            		nPoints1.set(points1.get());
+                            		nPoints2.set(points2.get());        						        						       					
+        							labelR4BlueScore.textProperty().bind(nPoints1.asString());
+        							labelR4RedScore.textProperty().bind(nPoints2.asString());  
+        						}
+        					});							
+						return null;
+						}
+					};
+				}
+			};			
+		backgroundhread.restart();
 	}
-	
-//	public void resetPoints() {
-//		TkdServer.resetPoints();
-//		f1points.setText("0");
-//		f2points.setText("0");
-//		drawResult.setText("4");
-//		f1WarningScore.setText("0");
-//		f1Warnings = 0;
-//		f2WarningScore.setText("0");
-//		f2Warnings = 0;
-//		f1PenaltyScore.setText("0");
-//		f1Penalties = 0;
-//		f2PenaltyScore.setText("0");
-//		f2Penalties = 0;
-//	}
-
-	@Override
-	public void updatePoints(AtomicInteger points1, AtomicInteger points2, String refereeId) {
-		if (refereeId.equals(mReferee1ID)) {
-			int nPoints1 = points1.get();
-			int nPoints2 = points2.get();
-			String f1update = Integer.toString(nPoints1);
-			labelR1RedScore.setText(f1update);
-			String f2update = Integer.toString(nPoints2);
-			labelR1BlueScore.setText(f2update);			
-		}
-		if (refereeId.equals(mReferee2ID)) {
-			int nPoints1 = points1.get();
-			int nPoints2 = points2.get();
-			String f1update = Integer.toString(nPoints1);
-			labelR2RedScore.setText(f1update);
-			String f2update = Integer.toString(nPoints2);
-			labelR2BlueScore.setText(f2update);
-		}
-		if (refereeId.equals(mReferee3ID)) {
-			int nPoints1 = points1.get();
-			int nPoints2 = points2.get();
-			String f1update = Integer.toString(nPoints1);
-			labelR3RedScore.setText(f1update);
-			String f2update = Integer.toString(nPoints2);
-			labelR3BlueScore.setText(f2update);
-		}
-		if (refereeId.equals(mReferee4ID)) {
-			int nPoints1 = points1.get();
-			int nPoints2 = points2.get();
-			String f1update = Integer.toString(nPoints1);
-			labelR4RedScore.setText(f1update);
-			String f2update = Integer.toString(nPoints2);
-			labelR4BlueScore.setText(f2update);
-		}		
-	};
-
-	
 }
