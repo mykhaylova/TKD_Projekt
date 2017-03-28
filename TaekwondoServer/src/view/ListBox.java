@@ -43,8 +43,8 @@ public class ListBox implements EventHandler<ActionEvent> {
 		choiceRounds.getItems().add("1");
 		choiceRounds.getItems().add("2");
 		choiceRounds.getItems().add("3");
-		choiceRounds.setValue("3");
-		roundsN = "3";
+		choiceRounds.setValue("2");
+		roundsN = "2";
 		choiceRounds.getSelectionModel().selectedItemProperty().addListener((v, oldValue, newValue)-> resultRounds(newValue));
 		
 		Label lbl2 = new Label();
@@ -101,19 +101,19 @@ public class ListBox implements EventHandler<ActionEvent> {
 	}
 
 	private static Object resultRestsLength(String newValue) {
-		System.out.println("resultRestLength: " + newValue);
+		//System.out.println("resultRestLength: " + newValue);
 		restL = newValue;
 		return null;
 	}
 
 	private static Object resultRoundsLength(String newValue) {
 		roundsL = newValue;
-		System.out.println("resultRoundsLength: " + newValue);
+		//System.out.println("resultRoundsLength: " + newValue);
 		return null;
 	}
 
 	private static Object resultRounds(String newValue) {
-		System.out.println("resultRounds: "+ newValue);
+		//System.out.println("resultRounds: "+ newValue);
 		//editor[0] = newValue;
 		//System.out.println("Array na poz 0: " + editor[0].toString());
 		roundsN = newValue;
@@ -134,7 +134,7 @@ public class ListBox implements EventHandler<ActionEvent> {
 		///getChoice();
 		editorResult = roundsN+roundsL+restL;
 		//new MainWindow();
-		System.out.println("BTN READY: " + editorResult);
+		//System.out.println("BTN READY: " + editorResult);
 		stage.close();
 		//btnOldClicked = true;
 
