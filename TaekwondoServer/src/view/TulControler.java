@@ -66,8 +66,8 @@ public class TulControler {
 
 	@FXML
 	private void handleResetButtonAction(ActionEvent e) throws IOException {
-		topLeftLabelTul.setText("12");
-		topRightLabelTul.setText("12");
+		topLeftLabelTul.setText("10");
+		topRightLabelTul.setText("10");
 	}
 
 	@FXML

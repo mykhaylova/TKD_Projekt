@@ -1,7 +1,5 @@
 package view;
 
-import java.awt.Toolkit;
-import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -10,7 +8,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import javax.swing.Timer;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
-import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleIntegerProperty;
@@ -27,7 +24,6 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonBase;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
@@ -36,7 +32,6 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import model.TkdServer;
 import model.TkdServer.PointListener;
-import view.MainWindow.TimeClass;
 
 public class SparingControler implements Initializable, PointListener {
 	
@@ -887,9 +882,9 @@ public class SparingControler implements Initializable, PointListener {
 		}
 	}
 	
-	/*SHOWS ERROR!!!!
-	 * 
-	 * @FXML
+	
+	
+	@FXML
 	private void handleExtraTimeButtonAction (ActionEvent e) {
 		String extraTime = ExtraTimeBox.show("Extra Time", "Extra Time Editor", "Ready", "Cancel");
 		
@@ -904,7 +899,7 @@ public class SparingControler implements Initializable, PointListener {
 			resetWarningAndPenalty();
 			buttonStartTimer.setDisable(false);
 		}
-	}*/
+	}
 	
 	private void resetBlueRedScore () {
 		blueScore.setText("0");
@@ -1112,9 +1107,6 @@ public class SparingControler implements Initializable, PointListener {
 		backgroundhread.restart();
 	}
 
-	/// System.out.println("SET ROUNDS LENGTH czas: " + time);	
-	//}
-	
 	private void disableWarningAndPenaltyB () {
 		minusWarningBlueButtonSparing.setDisable(true);
 		plusWarningBlueButtonSparing.setDisable(true);
