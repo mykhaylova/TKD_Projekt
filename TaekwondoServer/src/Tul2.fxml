@@ -4,6 +4,8 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
@@ -113,11 +115,11 @@
  
                </bottom>
                <center>
-                  <SplitPane dividerPositions="0.27350427350427353" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" BorderPane.alignment="CENTER">
+                  <SplitPane dividerPositions="0.4044943820224719" orientation="VERTICAL" prefHeight="49.0" prefWidth="278.0" BorderPane.alignment="CENTER">
                     <items>
                       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="16.0" prefWidth="276.0">
                            <children>
-                              <Label fx:id="labelRoundTul" alignment="CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="30.0" prefWidth="280.0" style="-fx-background-color: white;" text="Round 1">
+                              <Label fx:id="labelRoundTul" alignment="CENTER" layoutX="-1.0" layoutY="-1.0" prefHeight="45.0" prefWidth="280.0" style="-fx-background-color: white;" text="Round 1">
                                  <font>
                                     <Font name="System Bold" size="18.0" />
                                  </font>
@@ -140,7 +142,7 @@
                                     <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                  </rowConstraints>
                                  <children>
-                                    <Label fx:id="labelBlueResult1" alignment="CENTER" prefHeight="60.0" prefWidth="39.0" text="0" GridPane.columnIndex="1">
+                                    <Label fx:id="labelBlueResult" alignment="CENTER" prefHeight="44.0" prefWidth="39.0" text="0" GridPane.columnIndex="1">
                                        <font>
                                           <Font size="40.0" />
                                        </font>
@@ -151,7 +153,7 @@
                                           <Font name="System Bold" size="40.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="labelDrawResult1" alignment="CENTER" prefHeight="61.0" prefWidth="40.0" text="5" GridPane.columnIndex="3">
+                                    <Label fx:id="labelDrawResult" alignment="CENTER" prefHeight="61.0" prefWidth="40.0" text="5" GridPane.columnIndex="3">
                                        <font>
                                           <Font size="40.0" />
                                        </font>
@@ -161,20 +163,51 @@
                                           <Font name="System Bold" size="40.0" />
                                        </font>
                                     </Label>
-                                    <Label fx:id="labelRedResult1" alignment="CENTER" prefHeight="61.0" prefWidth="40.0" style="-fx-background-color: white;" text="0" GridPane.columnIndex="5">
+                                    <Label fx:id="labelRedResult" alignment="CENTER" prefHeight="61.0" prefWidth="40.0" style="-fx-background-color: white;" text="0" GridPane.columnIndex="5">
                                        <font>
                                           <Font size="40.0" />
                                        </font>
                                     </Label>
                                  </children>
                               </GridPane>
-                              <Button layoutX="-1.0" layoutY="61.0" mnemonicParsing="false" prefHeight="10.0" prefWidth="139.0" text="New" />
-                              <Button layoutX="138.0" layoutY="61.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="140.0" text="Extra Time" />
                            </children>
                         </AnchorPane>
                     </items>
                   </SplitPane>
                </center>
+               <bottom>
+                  <HBox prefHeight="17.0" prefWidth="278.0" BorderPane.alignment="CENTER">
+                     <children>
+                        <Button fx:id="tulEditor" mnemonicParsing="false" prefHeight="28.0" prefWidth="139.0">
+                           <graphic>
+                              <ImageView fx:id="tulEditor" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Img/1489945503_black_8_audio_enhancement.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0">
+                           <graphic>
+                              <ImageView fx:id="tulGetScore" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Img/gResult.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                        <Button fx:id="tulExtraTime" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="139.0">
+                           <graphic>
+                              <ImageView fx:id="etraTimeTul" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                                 <image>
+                                    <Image url="@Img/1489945974_black_5_favorite_star.png" />
+                                 </image>
+                              </ImageView>
+                           </graphic>
+                        </Button>
+                     </children>
+                  </HBox>
+               </bottom>
             </BorderPane>
          </children>
       </GridPane>
