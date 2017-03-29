@@ -38,7 +38,7 @@ public class ScoringTul
 
     static ExecutorService threadPool = Executors.newCachedThreadPool();
     static HttpServer mServer = null;
-    static ArrayList<PointListener> mListeners = new ArrayList<>();    
+    static ArrayList<PointsListener> mListeners = new ArrayList<>();    
 
     static final HttpHandler mCountHandler = new HttpHandler() {
         @Override
@@ -164,7 +164,7 @@ public class ScoringTul
                 }
             } finally {
                 httpExchange.close();
-                for(PointListener pl : mListeners)
+                for(PointsListener pl : mListeners)
                 {
                 	pl.updatePoints(m1Fighter1Points, m1Fighter2Points, "referee1");
                 	pl.updatePoints(m2Fighter1Points, m2Fighter2Points, "referee2");
@@ -255,7 +255,7 @@ public class ScoringTul
 	   m4Fighter1Points.set(Float.floatToIntBits(0.0f));
 	   m4Fighter2Points.set(Float.floatToIntBits(0.0f));
 	   
-	   for(PointListener pl : mListeners)
+	   for(PointsListener pl : mListeners)
 	   {
 	       pl.updatePoints(m1Fighter1Points, m1Fighter2Points, "referee1");
 		   pl.updatePoints(m2Fighter1Points, m2Fighter2Points, "referee2");
@@ -265,12 +265,12 @@ public class ScoringTul
 	  	 	  
    }
     
-    public static void subscribe(PointListener pl)
+    public static void subscribe(PointsListener pl)
     {
     	mListeners.add(pl);  		
 	}
     
-    public interface PointListener
+    public interface PointsListener
     {
     	void updatePoints(AtomicInteger fighter1, AtomicInteger fighter2, String refereeID);
     };

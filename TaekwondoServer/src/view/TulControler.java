@@ -1,22 +1,54 @@
 package view;
 
 import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.ResourceBundle;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Service;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import model.ScoringTul.PointsListener;
 import model.TkdServer;
 
-public class TulControler {
+public class TulControler implements Initializable, PointsListener {
 	
+	@FXML
+	private ListView<String> listView;
+	private Service<Void> backgroundhread;	
+	
+	static String mReferee1ID = "referee1";
+	static String mReferee2ID = "referee2";
+	static String mReferee3ID = "referee3";
+	static String mReferee4ID = "referee4";
+
+	ObservableList<String> items = FXCollections.observableArrayList (getIps());
+	
+	public String[] getIps()
+	{
+		ArrayList<String> ipsAll = TkdServer.getAllIPs();
+		String[] entries = ipsAll.toArray(new String[ipsAll.size()]);
+		return entries;
+	}
+	
+	@Override
+	public void initialize(URL location, ResourceBundle rescources)
+	{
+		listView.setItems(items);
+	}
 	private int tempResultBlue;
 	private int tempResultRed;
 	private int tempResultDraw;
