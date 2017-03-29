@@ -132,6 +132,10 @@ public class SparingControler implements Initializable, PointListener {
 	private Button buttonResetTimer;
 	@FXML
 	private Button buttonExtraTime;
+	@FXML 
+	private Button startButtonSparring;
+	@FXML 
+	private Button stopButtonSparring;
 
 	@FXML
 	private ChoiceBox<String> numberOfRoundsBoxSparing;
@@ -449,13 +453,19 @@ public class SparingControler implements Initializable, PointListener {
 
 	@FXML
 	void handleStartButtonAction(ActionEvent event) {
+		startButtonSparring.setStyle("-fx-base: #32cd32");
+		stopButtonSparring.setStyle("-fx-base: #d0d0d0");
 		TkdServer.StartServer();
-		TkdServer.subscribe(this);		
+		TkdServer.subscribe(this);	
+
 	}
 
 	@FXML
 	void handleStopButtonAction(ActionEvent event) {
+		stopButtonSparring.setStyle("-fx-base: #ff0000");
+		startButtonSparring.setStyle("-fx-base: #d0d0d0");
 		TkdServer.StopServer();
+
 	}
 
 	@FXML
@@ -886,7 +896,7 @@ public class SparingControler implements Initializable, PointListener {
 	
 	@FXML
 	private void handleExtraTimeButtonAction (ActionEvent e) {
-		String extraTime = ExtraTimeBox.show("Extra Time", "Extra Time Editor", "Ready", "Cancel");
+		String extraTime = ExtraTimeBox.show("Extra Time:", "Extra Time Editor", "Ready", "Cancel");
 		
 		if (extraTime== null){
 			
