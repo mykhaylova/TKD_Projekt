@@ -117,6 +117,81 @@ public class TulControler {
 	private Label labelDrawResult;
 	@FXML
 	private Label labelRedResult;
+	@FXML
+	private Label labelScoreBlue;
+	@FXML
+	private Label labelScoreRed;
+	@FXML
+	private Button tulEditorButton;
+	@FXML
+	private Button tulGetScoreButton;
+	@FXML 
+	private Button tulExtraTimeButton;
+	
+
+	@FXML
+	private void handleTulEditorButtonAction (ActionEvent e) {
+		String tulEditor = TulEditorBox.show("Number of Rounds:", "Tul Editor", "Ready", "Cancel");
+		
+		if (tulEditor== null){
+			
+		} else {
+			//System.out.println("Sparing controler received from ExtraTimeBox: " + extraTime);
+			//setLabelText(2);
+			//setRoundsNumber("1");
+			//setRoundsLength(extraTime);
+			//resetTemporaryResults();
+			//resetWarningAndPenalty();
+			//buttonStartTimer.setDisable(false);
+		}
+	}
+	
+	@FXML
+	private void handleTulGetScoreButton (ActionEvent e){
+		
+		int drawScore = Integer.parseInt(labelDrawResult.getText());
+		int blueScore = Integer.parseInt(labelBlueResult.getText());
+		int redScore = Integer.parseInt(labelRedResult.getText());
+		
+		if ((blueScore > redScore) && (blueScore > drawScore)) {
+			///System.out.println("Blue wins");
+			updateScoreLabels(1);
+			
+		} else if ((blueScore < redScore) && (redScore > drawScore)) {
+			///System.out.println("Red wins");
+			updateScoreLabels(3);
+			
+		} else if (((blueScore == redScore) && (blueScore > drawScore)) || ((drawScore>blueScore)&&(drawScore>redScore))){
+			///System.out.println("Draw");
+			updateScoreLabels(2);
+		} 
+		
+		
+
+		
+	}
+	private void updateScoreLabels (int blueDrawRed){
+		
+		if (blueDrawRed == 1) {
+		int tempBlue = Integer.parseInt(labelScoreBlue.getText());
+		tempBlue=tempBlue++;
+		labelScoreBlue.setText(String.valueOf(tempBlue));
+			
+		} else if (blueDrawRed == 3) {
+			int tempRed = Integer.parseInt(labelScoreRed.getText());
+			tempRed=tempRed++;
+			labelScoreRed.setText(String.valueOf(tempRed));
+			
+		} else {
+			int tempBlue = Integer.parseInt(labelScoreBlue.getText());
+			tempBlue++;
+			labelScoreBlue.setText(String.valueOf(tempBlue));
+			int tempRed = Integer.parseInt(labelScoreRed.getText());
+			tempRed++;
+			labelScoreRed.setText(String.valueOf(tempRed));
+			
+		}
+	}
 
 	@FXML
 	private void handleBackButtonAction(ActionEvent e) throws IOException {
@@ -144,6 +219,7 @@ public class TulControler {
 
 	@FXML
 	private void handleResetButtonAction(ActionEvent e) throws IOException {
+		
 
 	}
 

@@ -100,12 +100,12 @@
           <RowConstraints maxHeight="119.0" minHeight="10.0" prefHeight="119.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="topLeftLabelTul" alignment="CENTER" prefHeight="141.0" prefWidth="352.0" style="-fx-background-color: cornflowerblue; -fx-border-color: black;" text="0">
+            <Label fx:id="labelScoreBlue" alignment="CENTER" prefHeight="141.0" prefWidth="352.0" style="-fx-background-color: cornflowerblue; -fx-border-color: black;" text="0">
                <font>
                   <Font size="70.0" />
                </font>
             </Label>
-            <Label fx:id="topRightLabelTul" alignment="CENTER" prefHeight="141.0" prefWidth="352.0" style="-fx-border-color: black; -fx-background-color: crimson;" text="0" GridPane.columnIndex="4">
+            <Label fx:id="labelScoreRed" alignment="CENTER" prefHeight="141.0" prefWidth="352.0" style="-fx-border-color: black; -fx-background-color: crimson;" text="0" GridPane.columnIndex="4">
                <font>
                   <Font size="70.0" />
                </font>
@@ -178,25 +178,25 @@
                <bottom>
                   <HBox prefHeight="17.0" prefWidth="278.0" BorderPane.alignment="CENTER">
                      <children>
-                        <Button fx:id="tulEditor" mnemonicParsing="false" prefHeight="28.0" prefWidth="139.0">
+                        <Button fx:id="tulEditorButton" mnemonicParsing="false" onAction="#handleTulEditorButtonAction" prefHeight="28.0" prefWidth="139.0">
                            <graphic>
-                              <ImageView fx:id="tulEditor" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Img/1489945503_black_8_audio_enhancement.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button mnemonicParsing="false" prefHeight="29.0" prefWidth="140.0">
+                        <Button fx:id="tulGetScoreButton" mnemonicParsing="false" onAction="#handleTulGetScoreButton" prefHeight="29.0" prefWidth="140.0">
                            <graphic>
-                              <ImageView fx:id="tulGetScore" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
                                     <Image url="@Img/gResult.png" />
                                  </image>
                               </ImageView>
                            </graphic>
                         </Button>
-                        <Button fx:id="tulExtraTime" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="139.0">
+                        <Button fx:id="tulExtraTimeButton" layoutX="10.0" layoutY="10.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="139.0">
                            <graphic>
                               <ImageView fx:id="etraTimeTul" fitHeight="20.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
                                  <image>
