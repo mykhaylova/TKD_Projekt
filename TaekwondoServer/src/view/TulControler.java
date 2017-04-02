@@ -2,12 +2,17 @@ package view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
-
+import java.util.concurrent.atomic.AtomicInteger;
+import javafx.application.Platform;
+import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,25 +26,27 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
+import model.ScoringTul;
 import model.ScoringTul.PointsListener;
-import model.TkdServer;
+
 
 public class TulControler implements Initializable, PointsListener {
 	
 	@FXML
-	private ListView<String> listView;
+	private ListView<String> list;
 	private Service<Void> backgroundhread;	
 	
 	static String mReferee1ID = "referee1";
 	static String mReferee2ID = "referee2";
 	static String mReferee3ID = "referee3";
 	static String mReferee4ID = "referee4";
+	static String mReferee5ID = "referee5";
 
 	ObservableList<String> items = FXCollections.observableArrayList (getIps());
 	
 	public String[] getIps()
 	{
-		ArrayList<String> ipsAll = TkdServer.getAllIPs();
+		ArrayList<String> ipsAll = ScoringTul.getAllIPs();
 		String[] entries = ipsAll.toArray(new String[ipsAll.size()]);
 		return entries;
 	}
@@ -47,7 +54,7 @@ public class TulControler implements Initializable, PointsListener {
 	@Override
 	public void initialize(URL location, ResourceBundle rescources)
 	{
-		listView.setItems(items);
+		list.setItems(items);
 	}
 	private int tempResultBlue;
 	private int tempResultRed;
@@ -196,12 +203,9 @@ public class TulControler implements Initializable, PointsListener {
 		} else if (((blueScore == redScore) && (blueScore > drawScore)) || ((drawScore>blueScore)&&(drawScore>redScore))){
 			///System.out.println("Draw");
 			updateScoreLabels(2);
-		} 
-		
-		
-
-		
+		}		
 	}
+	
 	private void updateScoreLabels (int blueDrawRed){
 		
 		if (blueDrawRed == 1) {
@@ -220,8 +224,7 @@ public class TulControler implements Initializable, PointsListener {
 			labelScoreBlue.setText(String.valueOf(tempBlue));
 			int tempRed = Integer.parseInt(labelScoreRed.getText());
 			tempRed++;
-			labelScoreRed.setText(String.valueOf(tempRed));
-			
+			labelScoreRed.setText(String.valueOf(tempRed));			
 		}
 	}
 
@@ -246,7 +249,6 @@ public class TulControler implements Initializable, PointsListener {
 	private void handleExitButtonAction(ActionEvent e) throws IOException {
 		Stage stage = (Stage) exitButtonTul.getScene().getWindow();
 		stage.close();
-
 	}
 
 	@FXML
@@ -259,8 +261,8 @@ public class TulControler implements Initializable, PointsListener {
 	private void handleStartButtonAction(ActionEvent e) throws IOException {
 		startButtonTul.setStyle("-fx-base: #32cd32");
 		stopButtonTul.setStyle("-fx-base: #d0d0d0");
-		/// TkdServer.StartServer();
-		/// TkdServer.subscribe(this);
+		ScoringTul.StartServer();
+		ScoringTul.subscribe(this);
 
 	}
 
@@ -268,11 +270,8 @@ public class TulControler implements Initializable, PointsListener {
 	private void handleStopButtonAction(ActionEvent e) throws IOException {
 		stopButtonTul.setStyle("-fx-base: #ff0000");
 		startButtonTul.setStyle("-fx-base: #d0d0d0");
-		/// TkdServer.StopServer();
+		ScoringTul.StopServer();
 	}
-	
-	
-
 
 	private void sumPointsRef() {
 		
@@ -372,10 +371,87 @@ public class TulControler implements Initializable, PointsListener {
 		
 		labelBlueResult.setText(String.valueOf(tempResultBlue));
 		labelDrawResult.setText(String.valueOf(tempResultDraw));
-		labelRedResult.setText(String.valueOf(tempResultRed));
-		
-		
+		labelRedResult.setText(String.valueOf(tempResultRed));		
+	}	
+		 
+	@Override
+	public void updatePoints(AtomicInteger points1, AtomicInteger points2, String refereeId, String level) {
+		backgroundhread = new Service<Void>() 
+		{
+			@Override
+			protected Task<Void> createTask() 
+			{				
+				return new Task<Void>() 
+				{				
+					@Override
+					protected Void call() throws Exception 
+					{
+						Platform.runLater(() -> 
+						{             
+							if (level.equals("one"))
+							{
+                               	if (refereeId.equals(mReferee1ID)) 
+                               	{   
+                            		SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+                            		float newPoints1 = Float.intBitsToFloat(points1.get());
+                            		nPoints1.set(newPoints1);
+                            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+                            		float newPoints2 = Float.intBitsToFloat(points2.get());
+                            		nPoints2.set(newPoints2);                                    
+                            		r1labelBlueLevel1.textProperty().bind(nPoints1.asString("%.1f"));
+        							r1labelRedLevel1.textProperty().bind(nPoints2.asString("%.1f"));        									
+        						}        						
+        						if (refereeId.equals(mReferee2ID))
+        						{        						 
+        							SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+                            		float newPoints1 = Float.intBitsToFloat(points1.get());
+                            		nPoints1.set(newPoints1);
+                            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+                            		float newPoints2 = Float.intBitsToFloat(points2.get());
+                            		nPoints2.set(newPoints2);                                    
+                            		r2labelBlueLevel1.textProperty().bind(nPoints1.asString("%.1f"));
+        							r2labelRedLevel1.textProperty().bind(nPoints2.asString("%.1f"));    
+        						}
+        						if (refereeId.equals(mReferee3ID)) 
+        						{        						
+        							SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+                            		float newPoints1 = Float.intBitsToFloat(points1.get());
+                            		nPoints1.set(newPoints1);
+                            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+                            		float newPoints2 = Float.intBitsToFloat(points2.get());
+                            		nPoints2.set(newPoints2);                                    
+                            		r3labelBlueLevel1.textProperty().bind(nPoints1.asString("%.1f"));
+        							r3labelRedLevel1.textProperty().bind(nPoints2.asString("%.1f"));     
+        						}
+        						if (refereeId.equals(mReferee4ID)) 
+        						{        						
+        							SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+                            		float newPoints1 = Float.intBitsToFloat(points1.get());
+                            		nPoints1.set(newPoints1);
+                            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+                            		float newPoints2 = Float.intBitsToFloat(points2.get());
+                            		nPoints2.set(newPoints2);                                    
+                            		r4labelBlueLevel1.textProperty().bind(nPoints1.asString("%.1f"));
+        							r4labelRedLevel1.textProperty().bind(nPoints2.asString("%.1f"));    
+        						}
+        						if (refereeId.equals(mReferee5ID)) 
+        						{        						
+        							SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+                            		float newPoints1 = Float.intBitsToFloat(points1.get());
+                            		nPoints1.set(newPoints1);
+                            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+                            		float newPoints2 = Float.intBitsToFloat(points2.get());
+                            		nPoints2.set(newPoints2);                                    
+                            		r5labelBlueLevel1.textProperty().bind(nPoints1.asString("%.1f"));
+        							r5labelRedLevel1.textProperty().bind(nPoints2.asString("%.1f"));    
+        						}
+							}
+        					});							
+						return null;
+						}
+					};
+				}
+			};			
+		backgroundhread.restart();		
 	}
-
-
 }

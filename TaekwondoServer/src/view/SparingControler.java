@@ -465,7 +465,6 @@ public class SparingControler implements Initializable, PointListener {
 		stopButtonSparring.setStyle("-fx-base: #ff0000");
 		startButtonSparring.setStyle("-fx-base: #d0d0d0");
 		TkdServer.StopServer();
-
 	}
 
 	@FXML

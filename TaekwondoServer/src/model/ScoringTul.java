@@ -9,6 +9,7 @@ import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.net.UnknownHostException;
 import java.nio.charset.StandardCharsets;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.concurrent.ExecutorService;
@@ -27,14 +28,18 @@ public class ScoringTul
     static String m2RefereeID = "referee2";
     static String m3RefereeID = "referee3";
     static String m4RefereeID = "referee4";
-    static AtomicInteger m1Fighter1Points = new AtomicInteger(Float.floatToIntBits(0.0f));
-    static AtomicInteger m1Fighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
-    static AtomicInteger m2Fighter1Points = new AtomicInteger(Float.floatToIntBits(0.0f));
-    static AtomicInteger m2Fighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
-    static AtomicInteger m3Fighter1Points = new AtomicInteger(Float.floatToIntBits(0.0f));
-    static AtomicInteger m3Fighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
-    static AtomicInteger m4Fighter1Points = new AtomicInteger(Float.floatToIntBits(0.0f));
-    static AtomicInteger m4Fighter2Points = new AtomicInteger(Float.floatToIntBits(0.0f));
+    static String m5RefereeID = "referee5";
+    private static String level = "one";
+    static AtomicInteger m1Fighter1Points = new AtomicInteger(Float.floatToIntBits(6.0f));
+    static AtomicInteger m1Fighter2Points = new AtomicInteger(Float.floatToIntBits(6.0f));
+    static AtomicInteger m2Fighter1Points = new AtomicInteger(Float.floatToIntBits(6.0f));
+    static AtomicInteger m2Fighter2Points = new AtomicInteger(Float.floatToIntBits(6.0f));
+    static AtomicInteger m3Fighter1Points = new AtomicInteger(Float.floatToIntBits(6.0f));
+    static AtomicInteger m3Fighter2Points = new AtomicInteger(Float.floatToIntBits(6.0f));
+    static AtomicInteger m4Fighter1Points = new AtomicInteger(Float.floatToIntBits(6.0f));
+    static AtomicInteger m4Fighter2Points = new AtomicInteger(Float.floatToIntBits(6.0f));
+    static AtomicInteger m5Fighter1Points = new AtomicInteger(Float.floatToIntBits(6.0f));
+    static AtomicInteger m5Fighter2Points = new AtomicInteger(Float.floatToIntBits(6.0f));
 
     static ExecutorService threadPool = Executors.newCachedThreadPool();
     static HttpServer mServer = null;
@@ -76,9 +81,10 @@ public class ScoringTul
                     br.close();
                     String requestBody = sb.toString();
                     String[] requestBodyParts = requestBody.split(":");
-                    String refereeID = requestBodyParts[0];
-                    String fighterID = requestBodyParts[1];
-                    float points = Float.valueOf(requestBodyParts[2]);
+                    level = requestBodyParts[0];
+                    String refereeID = requestBodyParts[1];
+                    String fighterID = requestBodyParts[2];
+                    float points = Float.valueOf(requestBodyParts[3]);
                     System.out.println("REQ:"+requestBody);
                     
                 	   
@@ -154,6 +160,24 @@ public class ScoringTul
 	                        System.err.println("Point update for unknown FighterID received.");
 	                    }
                     }
+                    if(m5RefereeID.equals(refereeID))
+                    {                	   
+	                    if(mFighter1ID.equals(fighterID))
+	                    {
+	                        float fighterPoints = Float.intBitsToFloat(m5Fighter1Points.get());
+	                        fighterPoints += points;
+	                        m5Fighter1Points.set(Float.floatToIntBits(fighterPoints));
+	                    }
+	                    else if(mFighter2ID.equals(fighterID))
+	                    {
+	                        float fighterPoints = Float.intBitsToFloat(m5Fighter2Points.get());
+	                        fighterPoints += points;
+	                        m5Fighter2Points.set(Float.floatToIntBits(fighterPoints));
+	                    }
+	                    else {
+	                        System.err.println("Point update for unknown FighterID received.");
+	                    }
+                    }
 
                     //answer
                     httpExchange.sendResponseHeaders(200, -1); //we dont send a response body, so -1;
@@ -166,16 +190,15 @@ public class ScoringTul
                 httpExchange.close();
                 for(PointsListener pl : mListeners)
                 {
-                	pl.updatePoints(m1Fighter1Points, m1Fighter2Points, "referee1");
-                	pl.updatePoints(m2Fighter1Points, m2Fighter2Points, "referee2");
-                	pl.updatePoints(m3Fighter1Points, m3Fighter2Points, "referee3");
-                	pl.updatePoints(m4Fighter1Points, m4Fighter2Points, "referee4");
+                	pl.updatePoints(m1Fighter1Points, m1Fighter2Points, "referee1", level);
+                	pl.updatePoints(m2Fighter1Points, m2Fighter2Points, "referee2", level);
+                	pl.updatePoints(m3Fighter1Points, m3Fighter2Points, "referee3", level);
+                	pl.updatePoints(m4Fighter1Points, m4Fighter2Points, "referee4", level);
                 }
             }
         }
-    };
-    
-    
+    };    
+       
     public static ArrayList<String> getAllIPs()
     {
     	ArrayList<String> ips = new ArrayList<String>();
@@ -214,10 +237,7 @@ public class ScoringTul
         }catch (UnknownHostException e)
         {
             e.printStackTrace();
-        }
-
-        //to make the httpServer handle the request multithreaded (1 thread by request) we use a thread pool.
-        // This avoids creating new threads on the fly, but uses a pool of a fixed number of threads to process the requests.
+        }       
         ExecutorService threadPool = Executors.newFixedThreadPool(24);
         try {
             mServer = HttpServer.create(addr, 24);
@@ -235,7 +255,7 @@ public class ScoringTul
     {
     	try 
     	{
-    		mServer.stop(1);
+    		mServer.stop(0);
     		System.out.println("stopped http server");
     	}
     	catch (NullPointerException e)
@@ -257,22 +277,21 @@ public class ScoringTul
 	   
 	   for(PointsListener pl : mListeners)
 	   {
-	       pl.updatePoints(m1Fighter1Points, m1Fighter2Points, "referee1");
-		   pl.updatePoints(m2Fighter1Points, m2Fighter2Points, "referee2");
-		   pl.updatePoints(m3Fighter1Points, m3Fighter2Points, "referee3");
-		   pl.updatePoints(m4Fighter1Points, m4Fighter2Points, "referee4");
-	   }
-	  	 	  
+	       pl.updatePoints(m1Fighter1Points, m1Fighter2Points, "referee1", level);
+		   pl.updatePoints(m2Fighter1Points, m2Fighter2Points, "referee2", level);
+		   pl.updatePoints(m3Fighter1Points, m3Fighter2Points, "referee3", level);
+		   pl.updatePoints(m4Fighter1Points, m4Fighter2Points, "referee4", level);
+	   }	  	 	  
    }
     
-    public static void subscribe(PointsListener pl)
-    {
+   public static void subscribe(PointsListener pl)
+   {
     	mListeners.add(pl);  		
-	}
+   }
     
-    public interface PointsListener
-    {
-    	void updatePoints(AtomicInteger fighter1, AtomicInteger fighter2, String refereeID);
-    };
+   public interface PointsListener
+   {
+    	void updatePoints(AtomicInteger fighter1, AtomicInteger fighter2, String refereeID, String level);
+   };
 	
 } 
