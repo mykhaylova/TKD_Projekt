@@ -2,13 +2,11 @@ package view;
 
 import java.io.IOException;
 import java.net.URL;
-import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleFloatProperty;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -55,12 +53,10 @@ public class TulControler implements Initializable, PointsListener {
 	public void initialize(URL location, ResourceBundle rescources)
 	{
 		list.setItems(items);
-	}
-	
-<<<<<<< HEAD
-=======
+	}	
+
 	private static boolean serverOnBool;
->>>>>>> 1f9ab2fced039554e396b7ad81f5ce94c27a24ec
+
 	private int tempResultBlue;
 	private int tempResultRed;
 	private int tempResultDraw;
