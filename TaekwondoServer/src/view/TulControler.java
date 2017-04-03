@@ -56,6 +56,8 @@ public class TulControler implements Initializable, PointsListener {
 	{
 		list.setItems(items);
 	}
+	
+	private boolean serverOnBool;
 	private int tempResultBlue;
 	private int tempResultRed;
 	private int tempResultDraw;
@@ -168,6 +170,8 @@ public class TulControler implements Initializable, PointsListener {
 	private Button tulExtraTimeButton;
 	
 
+	
+
 	@FXML
 	private void handleTulEditorButtonAction (ActionEvent e) {
 		String tulEditor = TulEditorBox.show("Number of Rounds:", "Tul Editor", "Ready", "Cancel");
@@ -230,7 +234,14 @@ public class TulControler implements Initializable, PointsListener {
 
 	@FXML
 	private void handleBackButtonAction(ActionEvent e) throws IOException {
-		/// stop server ???
+		
+		boolean quitWindow = ConfirmationBox.show("Are you sure that you want to back to the menu? All the information will be lost!", "Confirmation", "Yes", "No");
+		
+		if (quitWindow) {
+			if (serverOnBool) {
+				ScoringTul.StopServer();
+				serverOnBool = false;
+			}
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getClassLoader().getResource("Menu.fxml"));
 		Parent root = (Parent) loader.load();
@@ -243,12 +254,27 @@ public class TulControler implements Initializable, PointsListener {
 		stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
 		stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
 		stage.show();
+		} else {
+			
+		}
+		
 	}
 
 	@FXML
 	private void handleExitButtonAction(ActionEvent e) throws IOException {
-		Stage stage = (Stage) exitButtonTul.getScene().getWindow();
-		stage.close();
+		
+		boolean quitWindow = ConfirmationBox.show("Are you sure that you want to exit? All the information will be lost!", "Confirmation", "Yes", "No");
+		
+		if (quitWindow) {
+			if (serverOnBool) {
+				serverOnBool = false;
+				ScoringTul.StopServer();
+			}
+			Stage stage = (Stage) exitButtonTul.getScene().getWindow();
+			stage.close();
+		} else {
+			
+		}
 	}
 
 	@FXML
@@ -263,6 +289,7 @@ public class TulControler implements Initializable, PointsListener {
 		stopButtonTul.setStyle("-fx-base: #d0d0d0");
 		ScoringTul.StartServer();
 		ScoringTul.subscribe(this);
+		serverOnBool = true;
 
 	}
 
@@ -271,6 +298,7 @@ public class TulControler implements Initializable, PointsListener {
 		stopButtonTul.setStyle("-fx-base: #ff0000");
 		startButtonTul.setStyle("-fx-base: #d0d0d0");
 		ScoringTul.StopServer();
+		serverOnBool = false ;
 	}
 
 	private void sumPointsRef() {

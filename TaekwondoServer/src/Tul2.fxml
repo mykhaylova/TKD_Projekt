@@ -82,7 +82,7 @@
                   <Font size="18.0" />
                </font>
             </Button>
-            <Button fx:id="exitButtonSparing" mnemonicParsing="false" onAction="#handleExitButtonAction" prefHeight="50.0" prefWidth="140.0" text="EXIT" GridPane.columnIndex="2">
+            <Button fx:id="exitButtonTul" mnemonicParsing="false" onAction="#handleExitButtonAction" prefHeight="50.0" prefWidth="140.0" text="EXIT" GridPane.columnIndex="2">
                <font>
                   <Font size="18.0" />
                </font>
