@@ -30,11 +30,12 @@ import javafx.scene.control.ListView;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import model.ScoringTul;
 import model.TkdServer;
 import model.TkdServer.PointListener;
 
 public class SparingControler implements Initializable, PointListener {
-	
+	private static boolean serverOnBool;
 	@FXML
 	private ListView<String> listView;
 	private Service<Void> backgroundthread;	
@@ -136,6 +137,8 @@ public class SparingControler implements Initializable, PointListener {
 	private Button startButtonSparring;
 	@FXML 
 	private Button stopButtonSparring;
+	@FXML 
+	private Button exitButtonSparring;
 
 	@FXML
 	private ChoiceBox<String> numberOfRoundsBoxSparing;
@@ -421,6 +424,14 @@ public class SparingControler implements Initializable, PointListener {
 
 	@FXML
 	void handleBackButtonAction(ActionEvent e) throws IOException {
+		boolean quitWindow = ConfirmationBox.show("Do you really want to go back to the main menu? All the information will be lost!", "Confirm Exit", "Yes", "No");
+		
+		if (quitWindow) {
+			if (serverOnBool) {
+				TkdServer.StopServer();
+				serverOnBool = false;
+			}
+		
 		FXMLLoader loader = new FXMLLoader();
 		loader.setLocation(getClass().getClassLoader().getResource("Menu.fxml"));
 		Parent root = (Parent) loader.load();
@@ -433,7 +444,7 @@ public class SparingControler implements Initializable, PointListener {
 		stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
 		stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
 		stage.show();
-
+		}
 	}
 	
 	@FXML
@@ -443,6 +454,19 @@ public class SparingControler implements Initializable, PointListener {
 
 	@FXML
 	void handleExitButtonAction(ActionEvent event) {
+		boolean quitWindow = ConfirmationBox.show("Do you really want to exit? All the information will be lost!", "Confirm Exit", "Yes", "No");
+		
+		if (quitWindow) {
+			if (serverOnBool) {
+				serverOnBool = false;
+				ScoringTul.StopServer();
+			}
+			Stage stage = (Stage) exitButtonSparring.getScene().getWindow();
+			stage.close();
+		} else {
+			
+		}
+		
 
 	}
 
@@ -457,6 +481,7 @@ public class SparingControler implements Initializable, PointListener {
 		stopButtonSparring.setStyle("-fx-base: #d0d0d0");
 		TkdServer.StartServer();
 		TkdServer.subscribe(this);	
+		serverOnBool = true;
 
 	}
 
@@ -465,6 +490,7 @@ public class SparingControler implements Initializable, PointListener {
 		stopButtonSparring.setStyle("-fx-base: #ff0000");
 		startButtonSparring.setStyle("-fx-base: #d0d0d0");
 		TkdServer.StopServer();
+		serverOnBool = false;
 	}
 
 	@FXML
@@ -1135,5 +1161,19 @@ public class SparingControler implements Initializable, PointListener {
 		plusWarningRedButtonSparing.setDisable(false);
 		minusPenaltyRedButtonSparing.setDisable(false);
 		plusPenaltyRedButtonSparing.setDisable(false);
+	}
+
+	public static void exitSparring() {
+		boolean quitWindow = ConfirmationBox.show("Do you really want to exit? All the information will be lost!", "Confirm Exit", "Yes", "No");
+		
+		if (quitWindow) {
+			if (serverOnBool) {
+				serverOnBool = false;
+				TkdServer.StopServer();
+			}
+			Platform.exit();
+		} else {
+			
+		}
 	}
 }
