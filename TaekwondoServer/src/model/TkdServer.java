@@ -154,9 +154,8 @@ public class TkdServer
 	                        System.err.println("Point update for unknown FighterID received.");
 	                    }
                     }
-
-                    //answer
-                    httpExchange.sendResponseHeaders(200, -1); //we dont send a response body, so -1;
+                    
+                    httpExchange.sendResponseHeaders(200, -1); 
                     httpExchange.close();
                 }
                 else {
@@ -173,8 +172,7 @@ public class TkdServer
                 }
             }
         }
-    };
-    
+    };    
     
     public static ArrayList<String> getAllIPs()
     {
@@ -216,9 +214,7 @@ public class TkdServer
         {
             e.printStackTrace();
         }
-
-        //to make the httpServer handle the request multithreaded (1 thread by request) we use a thread pool.
-        // This avoids creating new threads on the fly, but uses a pool of a fixed number of threads to process the requests.
+       
         ExecutorService threadPool = Executors.newFixedThreadPool(24);
         try {
             mServer = HttpServer.create(addr, 24);

@@ -34,7 +34,7 @@ public class TulControler implements Initializable, PointsListener {
 	
 	@FXML
 	private ListView<String> list;
-	private Service<Void> backgroundhread;	
+	private Service<Void> backgroundthread;	
 	
 	static String mReferee1ID = "referee1";
 	static String mReferee2ID = "referee2";
@@ -56,6 +56,7 @@ public class TulControler implements Initializable, PointsListener {
 	{
 		list.setItems(items);
 	}
+	
 	private int tempResultBlue;
 	private int tempResultRed;
 	private int tempResultDraw;
@@ -376,7 +377,7 @@ public class TulControler implements Initializable, PointsListener {
 		 
 	@Override
 	public void updatePoints(AtomicInteger points1, AtomicInteger points2, String refereeId, String level) {
-		backgroundhread = new Service<Void>() 
+		backgroundthread = new Service<Void>() 
 		{
 			@Override
 			protected Task<Void> createTask() 
@@ -445,13 +446,131 @@ public class TulControler implements Initializable, PointsListener {
                             		r5labelBlueLevel1.textProperty().bind(nPoints1.asString("%.1f"));
         							r5labelRedLevel1.textProperty().bind(nPoints2.asString("%.1f"));    
         						}
-							}
-        					});							
+							}							
+				            
+							if (level.equals("two"))
+							{
+				               	if (refereeId.equals(mReferee1ID)) 
+				               	{   
+				            		SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+				            		float newPoints1 = Float.intBitsToFloat(points1.get());
+				            		nPoints1.set(newPoints1);
+				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+				            		float newPoints2 = Float.intBitsToFloat(points2.get());
+				            		nPoints2.set(newPoints2);                                    
+				            		r1labelBlueLevel2.textProperty().bind(nPoints1.asString("%.1f"));
+				        			r1labelRedLevel2.textProperty().bind(nPoints2.asString("%.1f"));        									
+				        		}        						
+				        		if (refereeId.equals(mReferee2ID))
+				        		{        						 
+				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+				            		float newPoints1 = Float.intBitsToFloat(points1.get());
+				            		nPoints1.set(newPoints1);
+				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+				            		float newPoints2 = Float.intBitsToFloat(points2.get());
+				            		nPoints2.set(newPoints2);                                    
+				            		r2labelBlueLevel2.textProperty().bind(nPoints1.asString("%.1f"));
+				        			r2labelRedLevel2.textProperty().bind(nPoints2.asString("%.1f"));    
+				        		}
+				        		if (refereeId.equals(mReferee3ID)) 
+				        		{        						
+				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+				            		float newPoints1 = Float.intBitsToFloat(points1.get());
+				            		nPoints1.set(newPoints1);
+				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+				            		float newPoints2 = Float.intBitsToFloat(points2.get());
+				            		nPoints2.set(newPoints2);                                    
+				            		r3labelBlueLevel2.textProperty().bind(nPoints1.asString("%.1f"));
+				        			r3labelRedLevel2.textProperty().bind(nPoints2.asString("%.1f"));     
+				        		}
+				        		if (refereeId.equals(mReferee4ID)) 
+				        		{        						
+				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+				            		float newPoints1 = Float.intBitsToFloat(points1.get());
+				            		nPoints1.set(newPoints1);
+				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+				            		float newPoints2 = Float.intBitsToFloat(points2.get());
+				            		nPoints2.set(newPoints2);                                    
+				            		r4labelBlueLevel2.textProperty().bind(nPoints1.asString("%.1f"));
+				        			r4labelRedLevel2.textProperty().bind(nPoints2.asString("%.1f"));    
+				        		}
+				        		if (refereeId.equals(mReferee5ID)) 
+				        		{        						
+				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+				            		float newPoints1 = Float.intBitsToFloat(points1.get());
+				            		nPoints1.set(newPoints1);
+				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+				            		float newPoints2 = Float.intBitsToFloat(points2.get());
+				            		nPoints2.set(newPoints2);                                    
+				            		r5labelBlueLevel2.textProperty().bind(nPoints1.asString("%.1f"));
+				        			r5labelRedLevel2.textProperty().bind(nPoints2.asString("%.1f"));    
+				        		}
+							}							
+				             
+							if (level.equals("three"))
+							{
+				               	if (refereeId.equals(mReferee1ID)) 
+				               	{   
+				            		SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+				            		float newPoints1 = Float.intBitsToFloat(points1.get());
+				            		nPoints1.set(newPoints1);
+				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+				            		float newPoints2 = Float.intBitsToFloat(points2.get());
+				            		nPoints2.set(newPoints2);                                    
+				            		r1labelBlueLevel3.textProperty().bind(nPoints1.asString("%.1f"));
+				        			r1labelRedLevel3.textProperty().bind(nPoints2.asString("%.1f"));        									
+				        		}        						
+				        		if (refereeId.equals(mReferee2ID))
+				        		{        						 
+				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+				            		float newPoints1 = Float.intBitsToFloat(points1.get());
+				            		nPoints1.set(newPoints1);
+				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+				            		float newPoints2 = Float.intBitsToFloat(points2.get());
+				            		nPoints2.set(newPoints2);                                    
+				            		r2labelBlueLevel3.textProperty().bind(nPoints1.asString("%.1f"));
+				        			r2labelRedLevel3.textProperty().bind(nPoints2.asString("%.1f"));    
+				        		}
+				        		if (refereeId.equals(mReferee3ID)) 
+				        		{        						
+				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+				            		float newPoints1 = Float.intBitsToFloat(points1.get());
+				            		nPoints1.set(newPoints1);
+				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+				            		float newPoints2 = Float.intBitsToFloat(points2.get());
+				            		nPoints2.set(newPoints2);                                    
+				            		r3labelBlueLevel3.textProperty().bind(nPoints1.asString("%.1f"));
+				        			r3labelRedLevel3.textProperty().bind(nPoints2.asString("%.1f"));     
+				        		}
+				        		if (refereeId.equals(mReferee4ID)) 
+				        		{        						
+				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+				            		float newPoints1 = Float.intBitsToFloat(points1.get());
+				            		nPoints1.set(newPoints1);
+				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+				            		float newPoints2 = Float.intBitsToFloat(points2.get());
+				            		nPoints2.set(newPoints2);                                    
+				            		r4labelBlueLevel3.textProperty().bind(nPoints1.asString("%.1f"));
+				        			r4labelRedLevel3.textProperty().bind(nPoints2.asString("%.1f"));    
+				        		}
+				        		if (refereeId.equals(mReferee5ID)) 
+				        		{        						
+				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
+				            		float newPoints1 = Float.intBitsToFloat(points1.get());
+				            		nPoints1.set(newPoints1);
+				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
+				            		float newPoints2 = Float.intBitsToFloat(points2.get());
+				            		nPoints2.set(newPoints2);                                    
+				            		r5labelBlueLevel3.textProperty().bind(nPoints1.asString("%.1f"));
+				        			r5labelRedLevel3.textProperty().bind(nPoints2.asString("%.1f"));    
+				        		}
+							} 
+							});							
 						return null;
 						}
 					};
 				}
 			};			
-		backgroundhread.restart();		
+		backgroundthread.restart();		
 	}
 }
