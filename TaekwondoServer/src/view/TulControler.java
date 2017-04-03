@@ -57,7 +57,7 @@ public class TulControler implements Initializable, PointsListener {
 		list.setItems(items);
 	}
 	
-	private boolean serverOnBool;
+	private static boolean serverOnBool;
 	private int tempResultBlue;
 	private int tempResultRed;
 	private int tempResultDraw;
@@ -169,7 +169,19 @@ public class TulControler implements Initializable, PointsListener {
 	@FXML 
 	private Button tulExtraTimeButton;
 	
-
+	public static void exitTul () {
+		boolean quitWindow = ConfirmationBox.show("Are you sure that you want to exit? All the information will be lost!", "Confirm Exit", "Yes", "No");
+		
+		if (quitWindow) {
+			if (serverOnBool) {
+				serverOnBool = false;
+				ScoringTul.StopServer();
+			}
+			Platform.exit();
+		} else {
+			
+		}
+	}
 	
 
 	@FXML
@@ -235,7 +247,7 @@ public class TulControler implements Initializable, PointsListener {
 	@FXML
 	private void handleBackButtonAction(ActionEvent e) throws IOException {
 		
-		boolean quitWindow = ConfirmationBox.show("Are you sure that you want to back to the menu? All the information will be lost!", "Confirmation", "Yes", "No");
+		boolean quitWindow = ConfirmationBox.show("Are you sure that you want to back to the menu? All the information will be lost!", "Confirm Exit", "Yes", "No");
 		
 		if (quitWindow) {
 			if (serverOnBool) {
