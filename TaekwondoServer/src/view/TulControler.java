@@ -170,7 +170,7 @@ public class TulControler implements Initializable, PointsListener {
 	private Button tulExtraTimeButton;
 	
 	public static void exitTul () {
-		boolean quitWindow = ConfirmationBox.show("Are you sure that you want to exit? All the information will be lost!", "Confirm Exit", "Yes", "No");
+		boolean quitWindow = ConfirmationBox.show("Do you really want to exit? All the information will be lost!", "Confirm Exit", "Yes", "No");
 		
 		if (quitWindow) {
 			if (serverOnBool) {
@@ -247,7 +247,7 @@ public class TulControler implements Initializable, PointsListener {
 	@FXML
 	private void handleBackButtonAction(ActionEvent e) throws IOException {
 		
-		boolean quitWindow = ConfirmationBox.show("Are you sure that you want to back to the menu? All the information will be lost!", "Confirm Exit", "Yes", "No");
+		boolean quitWindow = ConfirmationBox.show("Do you really want to go back to the main menu? All the information will be lost!", "Confirm Exit", "Yes", "No");
 		
 		if (quitWindow) {
 			if (serverOnBool) {
@@ -275,7 +275,7 @@ public class TulControler implements Initializable, PointsListener {
 	@FXML
 	private void handleExitButtonAction(ActionEvent e) throws IOException {
 		
-		boolean quitWindow = ConfirmationBox.show("Are you sure that you want to exit? All the information will be lost!", "Confirmation", "Yes", "No");
+		boolean quitWindow = ConfirmationBox.show("Do you really want to exit? All the information will be lost!", "Confirm Exit", "Yes", "No");
 		
 		if (quitWindow) {
 			if (serverOnBool) {

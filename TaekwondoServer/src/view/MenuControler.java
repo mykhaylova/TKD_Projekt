@@ -40,6 +40,13 @@ public class MenuControler extends Application {
 			Rectangle2D primScreenBounds = Screen.getPrimary().getVisualBounds();
 			stage.setX((primScreenBounds.getWidth() - stage.getWidth()) / 2);
 			stage.setY((primScreenBounds.getHeight() - stage.getHeight()) / 2);
+			stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			    @Override public void handle(WindowEvent t) {
+			        SparingControler.exitSparring();
+			        t.consume();
+			    }
+			});
+			
 			stage.show();
 
 	}
