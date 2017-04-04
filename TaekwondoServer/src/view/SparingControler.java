@@ -859,6 +859,8 @@ public class SparingControler implements Initializable, PointListener {
 
 	}
 
+	
+
 
 	///////// COUNTDOWN STOP //////////////////////////////
 	private void countDownStop() {
@@ -1131,7 +1133,6 @@ public class SparingControler implements Initializable, PointListener {
         							labelR4BlueScore.textProperty().bind(nPoints1.asString());
         							labelR4RedScore.textProperty().bind(nPoints2.asString());  
         						}
-        						updateResult();
         					});							
 						return null;
 						}

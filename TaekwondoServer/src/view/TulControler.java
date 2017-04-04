@@ -315,7 +315,8 @@ public class TulControler implements Initializable, PointsListener {
 		stage.show();
 		} else {
 			
-		}		
+		}
+		
 	}
 
 	@FXML
@@ -348,6 +349,7 @@ public class TulControler implements Initializable, PointsListener {
 		ScoringTul.StartServer();
 		ScoringTul.subscribe(this);
 		serverOnBool = true;
+
 	}
 
 	@FXML
@@ -484,8 +486,7 @@ public class TulControler implements Initializable, PointsListener {
                             		float newPoints2 = Float.intBitsToFloat(points2.get());
                             		nPoints2.set(newPoints2);                                    
                             		r1labelBlueLevel1.textProperty().bind(nPoints1.asString("%.1f"));
-        							r1labelRedLevel1.textProperty().bind(nPoints2.asString("%.1f"));    
-        					
+        							r1labelRedLevel1.textProperty().bind(nPoints2.asString("%.1f"));        									
         						}        						
         						if (refereeId.equals(mReferee2ID))
         						{        						 
