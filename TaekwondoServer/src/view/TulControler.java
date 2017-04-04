@@ -2,11 +2,13 @@ package view;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicInteger;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleFloatProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Service;
@@ -32,7 +34,7 @@ public class TulControler implements Initializable, PointsListener {
 	
 	@FXML
 	private ListView<String> list;
-	private Service<Void> backgroundthread;	
+	private Service<Void> backgroundhread;	
 	
 	static String mReferee1ID = "referee1";
 	static String mReferee2ID = "referee2";
@@ -53,10 +55,9 @@ public class TulControler implements Initializable, PointsListener {
 	public void initialize(URL location, ResourceBundle rescources)
 	{
 		list.setItems(items);
-	}	
-
+	}
+	
 	private static boolean serverOnBool;
-
 	private int tempResultBlue;
 	private int tempResultRed;
 	private int tempResultDraw;
@@ -167,6 +168,13 @@ public class TulControler implements Initializable, PointsListener {
 	private Button tulGetScoreButton;
 	@FXML 
 	private Button tulExtraTimeButton;
+	@FXML
+	private Label labelRoundTul;
+	
+	private int tulNumberOfRounds = 1;
+	private int tulTotalRounds = 1;
+	private boolean extraTimeBool = false;
+	
 	
 	public static void exitTul () {
 		boolean quitWindow = ConfirmationBox.show("Do you really want to exit? All the information will be lost!", "Confirm Exit", "Yes", "No");
@@ -190,7 +198,12 @@ public class TulControler implements Initializable, PointsListener {
 		if (tulEditor== null){
 			
 		} else {
-			//System.out.println("Sparing controler received from ExtraTimeBox: " + extraTime);
+			//System.out.println("Tul controler received from Tul Editor: " + tulEditor);
+			tulNumberOfRounds = Integer.parseInt(tulEditor);
+			tulGetScoreButton.setDisable(false);
+			labelRoundTul.setText("Round 1");
+			tulExtraTimeButton.setDisable(true);
+			resetScore();
 			//setLabelText(2);
 			//setRoundsNumber("1");
 			//setRoundsLength(extraTime);
@@ -200,8 +213,26 @@ public class TulControler implements Initializable, PointsListener {
 		}
 	}
 	
+	@FXML 
+	private void handleTulExtraTimeButton (ActionEvent e) {
+		String editorResults = TulExtraTimeBox.show("Extra Time?", "Extra Time Editor", "Ready", "Cancel");
+		
+		if (editorResults.equals("extra")) {
+			labelRoundTul.setText("Extra Time");
+			tulGetScoreButton.setDisable(false);
+			tulNumberOfRounds++;
+		}
+	}
+	
+	private void resetScore () {
+		labelScoreRed.setText("0");
+		labelScoreBlue.setText("0");
+	}
+	
 	@FXML
 	private void handleTulGetScoreButton (ActionEvent e){
+		
+	
 		
 		int drawScore = Integer.parseInt(labelDrawResult.getText());
 		int blueScore = Integer.parseInt(labelBlueResult.getText());
@@ -218,7 +249,24 @@ public class TulControler implements Initializable, PointsListener {
 		} else if (((blueScore == redScore) && (blueScore > drawScore)) || ((drawScore>blueScore)&&(drawScore>redScore))){
 			///System.out.println("Draw");
 			updateScoreLabels(2);
-		}		
+		}
+		tulNumberOfRounds--;
+		System.out.println("Tul number of Rounds: " + tulNumberOfRounds);
+		if (tulNumberOfRounds == 0) {
+			tulGetScoreButton.setDisable(true);
+			checkDraw();
+		} else {
+			labelRoundTul.setText("Round 2");
+		}
+	}
+	
+	private void checkDraw() {
+		int blue = Integer.parseInt(labelScoreBlue.getText());
+		int red = Integer.parseInt(labelScoreRed.getText());
+		
+		if (blue == red) {
+			tulExtraTimeButton.setDisable(false);
+		}
 	}
 	
 	private void updateScoreLabels (int blueDrawRed){
@@ -415,7 +463,7 @@ public class TulControler implements Initializable, PointsListener {
 		 
 	@Override
 	public void updatePoints(AtomicInteger points1, AtomicInteger points2, String refereeId, String level) {
-		backgroundthread = new Service<Void>() 
+		backgroundhread = new Service<Void>() 
 		{
 			@Override
 			protected Task<Void> createTask() 
@@ -484,131 +532,13 @@ public class TulControler implements Initializable, PointsListener {
                             		r5labelBlueLevel1.textProperty().bind(nPoints1.asString("%.1f"));
         							r5labelRedLevel1.textProperty().bind(nPoints2.asString("%.1f"));    
         						}
-							}							
-				            
-							if (level.equals("two"))
-							{
-				               	if (refereeId.equals(mReferee1ID)) 
-				               	{   
-				            		SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
-				            		float newPoints1 = Float.intBitsToFloat(points1.get());
-				            		nPoints1.set(newPoints1);
-				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
-				            		float newPoints2 = Float.intBitsToFloat(points2.get());
-				            		nPoints2.set(newPoints2);                                    
-				            		r1labelBlueLevel2.textProperty().bind(nPoints1.asString("%.1f"));
-				        			r1labelRedLevel2.textProperty().bind(nPoints2.asString("%.1f"));        									
-				        		}        						
-				        		if (refereeId.equals(mReferee2ID))
-				        		{        						 
-				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
-				            		float newPoints1 = Float.intBitsToFloat(points1.get());
-				            		nPoints1.set(newPoints1);
-				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
-				            		float newPoints2 = Float.intBitsToFloat(points2.get());
-				            		nPoints2.set(newPoints2);                                    
-				            		r2labelBlueLevel2.textProperty().bind(nPoints1.asString("%.1f"));
-				        			r2labelRedLevel2.textProperty().bind(nPoints2.asString("%.1f"));    
-				        		}
-				        		if (refereeId.equals(mReferee3ID)) 
-				        		{        						
-				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
-				            		float newPoints1 = Float.intBitsToFloat(points1.get());
-				            		nPoints1.set(newPoints1);
-				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
-				            		float newPoints2 = Float.intBitsToFloat(points2.get());
-				            		nPoints2.set(newPoints2);                                    
-				            		r3labelBlueLevel2.textProperty().bind(nPoints1.asString("%.1f"));
-				        			r3labelRedLevel2.textProperty().bind(nPoints2.asString("%.1f"));     
-				        		}
-				        		if (refereeId.equals(mReferee4ID)) 
-				        		{        						
-				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
-				            		float newPoints1 = Float.intBitsToFloat(points1.get());
-				            		nPoints1.set(newPoints1);
-				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
-				            		float newPoints2 = Float.intBitsToFloat(points2.get());
-				            		nPoints2.set(newPoints2);                                    
-				            		r4labelBlueLevel2.textProperty().bind(nPoints1.asString("%.1f"));
-				        			r4labelRedLevel2.textProperty().bind(nPoints2.asString("%.1f"));    
-				        		}
-				        		if (refereeId.equals(mReferee5ID)) 
-				        		{        						
-				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
-				            		float newPoints1 = Float.intBitsToFloat(points1.get());
-				            		nPoints1.set(newPoints1);
-				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
-				            		float newPoints2 = Float.intBitsToFloat(points2.get());
-				            		nPoints2.set(newPoints2);                                    
-				            		r5labelBlueLevel2.textProperty().bind(nPoints1.asString("%.1f"));
-				        			r5labelRedLevel2.textProperty().bind(nPoints2.asString("%.1f"));    
-				        		}
-							}							
-				             
-							if (level.equals("three"))
-							{
-				               	if (refereeId.equals(mReferee1ID)) 
-				               	{   
-				            		SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
-				            		float newPoints1 = Float.intBitsToFloat(points1.get());
-				            		nPoints1.set(newPoints1);
-				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
-				            		float newPoints2 = Float.intBitsToFloat(points2.get());
-				            		nPoints2.set(newPoints2);                                    
-				            		r1labelBlueLevel3.textProperty().bind(nPoints1.asString("%.1f"));
-				        			r1labelRedLevel3.textProperty().bind(nPoints2.asString("%.1f"));        									
-				        		}        						
-				        		if (refereeId.equals(mReferee2ID))
-				        		{        						 
-				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
-				            		float newPoints1 = Float.intBitsToFloat(points1.get());
-				            		nPoints1.set(newPoints1);
-				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
-				            		float newPoints2 = Float.intBitsToFloat(points2.get());
-				            		nPoints2.set(newPoints2);                                    
-				            		r2labelBlueLevel3.textProperty().bind(nPoints1.asString("%.1f"));
-				        			r2labelRedLevel3.textProperty().bind(nPoints2.asString("%.1f"));    
-				        		}
-				        		if (refereeId.equals(mReferee3ID)) 
-				        		{        						
-				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
-				            		float newPoints1 = Float.intBitsToFloat(points1.get());
-				            		nPoints1.set(newPoints1);
-				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
-				            		float newPoints2 = Float.intBitsToFloat(points2.get());
-				            		nPoints2.set(newPoints2);                                    
-				            		r3labelBlueLevel3.textProperty().bind(nPoints1.asString("%.1f"));
-				        			r3labelRedLevel3.textProperty().bind(nPoints2.asString("%.1f"));     
-				        		}
-				        		if (refereeId.equals(mReferee4ID)) 
-				        		{        						
-				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
-				            		float newPoints1 = Float.intBitsToFloat(points1.get());
-				            		nPoints1.set(newPoints1);
-				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
-				            		float newPoints2 = Float.intBitsToFloat(points2.get());
-				            		nPoints2.set(newPoints2);                                    
-				            		r4labelBlueLevel3.textProperty().bind(nPoints1.asString("%.1f"));
-				        			r4labelRedLevel3.textProperty().bind(nPoints2.asString("%.1f"));    
-				        		}
-				        		if (refereeId.equals(mReferee5ID)) 
-				        		{        						
-				        			SimpleFloatProperty nPoints1 = new SimpleFloatProperty();
-				            		float newPoints1 = Float.intBitsToFloat(points1.get());
-				            		nPoints1.set(newPoints1);
-				            		SimpleFloatProperty nPoints2 = new SimpleFloatProperty();
-				            		float newPoints2 = Float.intBitsToFloat(points2.get());
-				            		nPoints2.set(newPoints2);                                    
-				            		r5labelBlueLevel3.textProperty().bind(nPoints1.asString("%.1f"));
-				        			r5labelRedLevel3.textProperty().bind(nPoints2.asString("%.1f"));    
-				        		}
-							} 
-							});							
+							}
+        					});							
 						return null;
 						}
 					};
 				}
 			};			
-		backgroundthread.restart();		
+		backgroundhread.restart();		
 	}
 }

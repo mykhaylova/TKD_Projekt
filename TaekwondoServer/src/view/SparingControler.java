@@ -38,7 +38,7 @@ public class SparingControler implements Initializable, PointListener {
 	private static boolean serverOnBool;
 	@FXML
 	private ListView<String> listView;
-	private Service<Void> backgroundthread;	
+	private Service<Void> backgroundhread;	
 	
 	static String mReferee1ID = "referee1";
 	static String mReferee2ID = "referee2";
@@ -1085,7 +1085,7 @@ public class SparingControler implements Initializable, PointListener {
 	
 	public void updatePoints(AtomicInteger points1, AtomicInteger points2, String refereeId) 
 	{						
-		backgroundthread = new Service<Void>() 
+		backgroundhread = new Service<Void>() 
 		{
 			@Override
 			protected Task<Void> createTask() 
@@ -1139,7 +1139,7 @@ public class SparingControler implements Initializable, PointListener {
 					};
 				}
 			};			
-		backgroundthread.restart();
+		backgroundhread.restart();
 	}
 
 	private void disableWarningAndPenaltyB () {

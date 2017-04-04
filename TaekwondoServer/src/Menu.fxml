@@ -36,7 +36,7 @@
       <Label layoutX="353.0" layoutY="75.0" prefHeight="650.0" prefWidth="1200.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="190.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
       <ImageView fitHeight="398.0" fitWidth="290.0" layoutX="455.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../bin/view/logo1.jpg" />
+            <Image url="@Img/logo1.jpg" />
          </image>
       </ImageView>
       <ImageView fitHeight="231.0" fitWidth="300.0" layoutX="163.0" layoutY="136.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="806.0">
